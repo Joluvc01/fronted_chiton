@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { ICategory } from 'src/app/core/models/category.model';
 
 @Injectable({
@@ -35,4 +35,8 @@ export class CategoryService {
   public deleteCategory(id: number): Observable<string> {
     return this._httpClient.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
   }  
+  
+  checkCategoryExists(name: string): Observable<boolean> {
+    return this._httpClient.get<boolean>(`${this.baseUrl}/exist/${name}`);
+  }
 }

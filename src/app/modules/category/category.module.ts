@@ -8,12 +8,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FilterPipe } from 'src/app/shared/pipes/filter.pipe';
+import { MaterialModule } from 'src/app/shared/modules/material.module';
 
 @NgModule({
   declarations: [
     CategoryComponent,
     CategorydetailComponent,
-    FilterPipe
+    FilterPipe,
   ],
   imports: [
     CommonModule,
@@ -21,7 +22,8 @@ import { FilterPipe } from 'src/app/shared/pipes/filter.pipe';
     ReactiveFormsModule,
     FormsModule,
     NgxPaginationModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MaterialModule
   ],
 
   exports:[

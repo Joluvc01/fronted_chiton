@@ -7,7 +7,7 @@
             id="searchInput"
             class="form-control bg-transparent border-0"
             type="text"
-            placeholder="Buscar"
+            placeholder="Buscar por nombre"
             name="filterName"
             [(ngModel)]="filterName"
           />
@@ -29,7 +29,7 @@
   
 
     <div>
-      <button class="btn btn-primary" [routerLink]="['/categories/new']">
+      <button class="btn btn-primary" (click)="create()">
         Crear nueva categoría
       </button>
     </div>
@@ -54,13 +54,13 @@
           <td>{{ category.name }}</td>
           <td>{{ category.status }}</td>
           <td>
-            <button class="btn btn-primary btn-sm me-2">
+            <button class="btn btn-primary btn-sm me-2" (click)="edit(category.id)">
               <fa-icon [icon]="faPen"></fa-icon>
             </button>
-            <button class="btn btn-warning btn-sm me-2">
+            <button class="btn btn-warning btn-sm me-2" (click)="status(category.id)">
               <fa-icon [icon]="faThumbTack"></fa-icon>
             </button>
-            <button class="btn btn-danger btn-sm me-2">
+            <button class="btn btn-danger btn-sm me-2" (click)="delete(category.id)">
               <fa-icon [icon]="faTrash"></fa-icon>
             </button>
           </td>

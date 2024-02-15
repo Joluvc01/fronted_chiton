@@ -8,17 +8,19 @@ import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ErrorPageComponent } from './shared/components/error-page/error-page.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    ErrorPageComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
