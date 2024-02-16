@@ -1,0 +1,36 @@
+<form [formGroup]="myform" (ngSubmit)="save()">
+    <h1 mat-dialog-title>{{ inputdata.title }}</h1>
+    <div mat-dailog-content>
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="name"/>
+        <mat-error *ngIf="myform.get('name')?.hasError('required')">El nombre es obligatorio</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Categoría</mat-label>
+        <mat-select formControlName="category">
+          <mat-option *ngFor="let category of categories" [value]="category">
+            {{ category }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="myform.get('category')?.hasError('required')">La categoría es obligatoria</mat-error>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <mat-label>Color</mat-label>
+        <input matInput formControlName="color"/>
+        <mat-error *ngIf="myform.get('color')?.hasError('required')">El color es obligatorio</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Cantidad</mat-label>
+        <input matInput formControlName="stock" type="number" [min]="0"/>
+        <mat-error *ngIf="myform.get('stock')?.hasError('required')">La cantidad es obligatoria</mat-error>
+        <mat-error *ngIf="myform.get('stock')?.hasError('notAllowed')">La cantidad no puede ser cero</mat-error>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button type="submit" color="primary" [disabled]="myform.invalid">Guardar</button>
+      <button mat-raised-button type="button" color="warn" (click)="closepopup()">Cerrar</button>
+    </div>
+  </form>
+  

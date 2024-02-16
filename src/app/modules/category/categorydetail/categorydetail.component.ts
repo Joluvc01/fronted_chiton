@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Observable, map, of } from 'rxjs';
+import { map } from 'rxjs';
 import { ICategory } from 'src/app/core/models/category.model';
 import { CategoryService } from 'src/app/shared/services/category.service';
 
@@ -14,8 +14,6 @@ export class CategorydetailComponent implements OnInit {
 
   myform: FormGroup;
   category: ICategory | null = null;
-  allCategories: ICategory[] = [];
-  categoryNames: string[] = [];
   inputdata: any;
 
   constructor(
@@ -46,7 +44,7 @@ export class CategorydetailComponent implements OnInit {
   }
 
   closepopup(): void {
-    this.ref.close('Cerrar funcion');
+    this.ref.close();
   }
 
   save(): void {

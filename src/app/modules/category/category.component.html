@@ -47,7 +47,7 @@
       </thead>
       <tbody>
         <tr
-  *ngFor="let category of categoryList
+  *ngFor="let category of categories
       | filter: 'status': filterField: filterName
       | paginate : { itemsPerPage: 15, currentPage: p }">
           <td>{{ category.id }}</td>

@@ -8,8 +8,6 @@ import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ErrorPageComponent } from './shared/components/error-page/error-page.component';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,

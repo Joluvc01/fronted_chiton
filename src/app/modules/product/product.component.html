@@ -1,0 +1,88 @@
+<div class="area">
+    <div class="d-flex mt-4 justify-content-between">
+      <div class="search">
+        <form id="searchForm">
+          <div class="input-group bg-light">
+            <input
+              id="searchInput"
+              class="form-control bg-transparent border-0"
+              type="text"
+              placeholder="Buscar por nombre"
+              name="filterName"
+              [(ngModel)]="filterName"
+            />
+            <button type="submit" class="btn">
+              <img src="../../../../assets/media/search.svg" width="25px" />
+            </button>
+          </div>
+        </form>
+      </div>
+  
+      <div class="d-flex align-items-center">
+        <h2 class="me-3 mb-0" style="white-space: nowrap;">Filtrar por estado:</h2>
+        <select class="form-select mb-0 me-2" id="estadoSelect" name="filterField" [(ngModel)]="filterField">
+            <option value="">Todos</option>
+            <option value="Activado">Activado</option>
+            <option value="Desactivado">Desactivado</option>
+        </select>
+    </div>
+    
+  
+      <div>
+        <button class="btn btn-primary" (click)="create()">
+          Crear nuevo Producto
+        </button>
+      </div>
+    </div>
+  
+    <div class="mt-4">
+      <table class="table table-sm text-center mt-4">
+        <thead class="table">
+          <tr>
+            <th scope="col" class="col-1">#</th>
+            <th scope="col" class="col-3">Nombre</th>
+            <th scope="col" class="col-2">Categoria</th>
+            <th scope="col" class="col-2">Color</th>
+            <th scope="col" class="col-1">Stock</th>
+            <th scope="col" class="col-1">Estado</th>
+            <th scope="col" class="col-2">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+    *ngFor="let product of products
+        | filter: 'status': filterField: filterName
+        | paginate : { itemsPerPage: 15, currentPage: p }">
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.color }}</td>
+            <td>{{ product.stock }}</td>
+            <td>{{ product.status }}</td>
+            <td>
+              <button class="btn btn-success btn-sm me-2" (click)="addStock(product.id)">
+                <fa-icon [icon]="faPlus"></fa-icon>
+              </button>
+              <button class="btn btn-primary btn-sm me-2" (click)="edit(product.id)">
+                <fa-icon [icon]="faPen"></fa-icon>
+              </button>
+              <button class="btn btn-warning btn-sm me-2" (click)="status(product.id)">
+                <fa-icon [icon]="faThumbTack"></fa-icon>
+              </button>
+              <button class="btn btn-danger btn-sm me-2" (click)="delete(product.id)">
+                <fa-icon [icon]="faTrash"></fa-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-start">
+        <pagination-controls
+          (pageChange)="p = $event"
+          previousLabel="Anterior"
+          nextLabel="Siguiente"
+        ></pagination-controls>
+      </div>
+    </div>
+  </div>
+  

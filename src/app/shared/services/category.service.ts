@@ -36,7 +36,7 @@ export class CategoryService {
     return this._httpClient.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
   }  
   
-  checkCategoryExists(name: string): Observable<boolean> {
+  public checkCategoryExists(name: string): Observable<boolean> {
     return this._httpClient.get<boolean>(`${this.baseUrl}/exist/${name}`);
   }
 }
