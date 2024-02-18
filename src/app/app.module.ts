@@ -12,7 +12,7 @@ import { ErrorPageComponent } from './shared/components/error-page/error-page.co
   declarations: [
     AppComponent,
     NavbarComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
   ],
   imports: [
     BrowserModule,

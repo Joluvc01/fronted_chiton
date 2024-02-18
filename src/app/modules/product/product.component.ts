@@ -157,15 +157,29 @@ export class ProductComponent implements OnInit{
               console.log(response);
             },
             (error) => {
-              console.error(error);
-              const errorMessage = error.error;
+              console.error("Error object:", error);
+              let errorMessage = JSON.parse(error.error);
+              console.log(errorMessage);
+              
+              let purchases = errorMessage.Purchases.join(", ");
+              let references = errorMessage.References.join(", ");
+              
+              let errorText = "Se produjo un error al producto.";
+              if (purchases) {
+                  errorText += "<br>ID Ordenes de Compra asociadas:" + purchases.replace(/,/g, "<br>");
+              }
+              if (references) {
+                  errorText += "<br>ID Referencias asociadas:" + references.replace(/,/g, "<br>");
+              }
+          
               Swal.fire({
-                title: "Error",
-                text: errorMessage,
-                icon: "error"
+                  title: "Error",
+                  html: errorText,
+                  icon: "error"
               });
-            }
-            
+          }
+          
+          
           );
         }
       })

@@ -1,4 +1,4 @@
-<div class="area" *ngIf="products.length > 0">
+<div class="area" *ngIf="references.length > 0">
     <div class="d-flex mt-4 justify-content-between">
       <div class="search">
         <form id="searchForm">
@@ -6,10 +6,10 @@
             <input
               id="searchInput"
               class="form-control bg-transparent border-0"
-              type="text"
-              placeholder="Buscar por nombre"
+              type="number"
+              placeholder="Buscar por ID"
               name="filterName"
-              [(ngModel)]="filterName"
+              [(ngModel)]="filterId"
             />
             <button type="submit" class="btn">
               <img src="../../../../assets/media/search.svg" width="25px" />
@@ -22,15 +22,15 @@
         <h2 class="me-3 mb-0" style="white-space: nowrap;">Filtrar por estado:</h2>
         <select class="form-select mb-0 me-2" id="estadoSelect" name="filterField" [(ngModel)]="filterField">
             <option value="">Todos</option>
-            <option value="Activado">Activado</option>
-            <option value="Desactivado">Desactivado</option>
+            <option value="Completo">Completo</option>
+            <option value="Incompleto">Incompleto</option>
         </select>
     </div>
     
   
       <div>
         <button class="btn btn-primary" (click)="create()">
-          Crear nuevo Producto
+          Crear nueva Referencia
         </button>
       </div>
     </div>
@@ -40,36 +40,41 @@
         <thead class="table">
           <tr>
             <th scope="col" class="col-1">#</th>
-            <th scope="col" class="col-3">Nombre</th>
-            <th scope="col" class="col-2">Categoria</th>
-            <th scope="col" class="col-2">Color</th>
-            <th scope="col" class="col-1">Stock</th>
-            <th scope="col" class="col-1">Estado</th>
+            <th scope="col" class="col-3">Descripcion</th>
+            <th scope="col" class="col-2">Estado</th>
+            <th scope="col" class="col-2">Imagen</th>
+            <th scope="col" class="col-2">Detalles</th>
             <th scope="col" class="col-2">Acciones</th>
           </tr>
         </thead>
         <tbody>
           <tr
-    *ngFor="let product of products
-        | filtername: 'status': filterField: filterName
+    *ngFor="let reference of references
+        | filterid: 'status': filterField: filterId
         | paginate : { itemsPerPage: 15, currentPage: p }">
-            <td>{{ product.id }}</td>
-            <td>{{ product.name }}</td>
-            <td>{{ product.category }}</td>
-            <td>{{ product.color }}</td>
-            <td>{{ product.stock }}</td>
-            <td>{{ product.status }}</td>
+            <td>{{ reference.id }}</td>
+            <td>{{ reference.description }}</td>
+            <td>{{ reference.status }}</td>
             <td>
-              <button class="btn btn-success btn-sm me-2" (click)="addStock(product.id)">
-                <fa-icon [icon]="faPlus"></fa-icon>
-              </button>
-              <button class="btn btn-primary btn-sm me-2" (click)="edit(product.id)">
+                <button class="btn btn-primary btn-sm me-2" (click)="genpdf(reference.id)">
+                <fa-icon [icon]="faImage"></fa-icon>
+                 Ver Imagen
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-primary btn-sm me-2" (click)="genpdf(reference.id)">
+                <fa-icon [icon]="faInfo"></fa-icon>
+                 Ver Detalles
+                </button>
+            </td>
+            <td>
+              <button class="btn btn-primary btn-sm me-2" (click)="edit(reference.id)">
                 <fa-icon [icon]="faPen"></fa-icon>
               </button>
-              <button class="btn btn-warning btn-sm me-2" (click)="status(product.id)">
+              <button class="btn btn-warning btn-sm me-2" (click)="status(reference.id)">
                 <fa-icon [icon]="faThumbTack"></fa-icon>
               </button>
-              <button class="btn btn-danger btn-sm me-2" (click)="delete(product.id)">
+              <button class="btn btn-danger btn-sm me-2" (click)="delete(reference.id)">
                 <fa-icon [icon]="faTrash"></fa-icon>
               </button>
             </td>
@@ -85,7 +90,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="products.length === 0" class="area">
+  <div *ngIf="references.length === 0" class="area">
     <div class="alert alert-info mt-4">
       No hay ordenes de compra disponibles. <label (click)="create()"><u>Click para crear</u></label>
     </div>

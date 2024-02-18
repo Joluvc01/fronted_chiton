@@ -1,4 +1,4 @@
-<div class="area">
+<div class="area" *ngIf="categories.length > 0">
   <div class="d-flex mt-4 justify-content-between">
     <div class="search">
       <form id="searchForm">
@@ -48,7 +48,7 @@
       <tbody>
         <tr
   *ngFor="let category of categories
-      | filter: 'status': filterField: filterName
+      | filtername: 'status': filterField: filterName
       | paginate : { itemsPerPage: 15, currentPage: p }">
           <td>{{ category.id }}</td>
           <td>{{ category.name }}</td>
@@ -74,5 +74,10 @@
         nextLabel="Siguiente"
       ></pagination-controls>
     </div>
+  </div>
+</div>
+<div *ngIf="categories.length === 0" class="area">
+  <div class="alert alert-info mt-4">
+    No hay ordenes de categorias disponibles. <label (click)="create()"><u>Click para crear</u></label>
   </div>
 </div>

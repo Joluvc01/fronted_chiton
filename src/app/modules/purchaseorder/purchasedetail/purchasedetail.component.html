@@ -1,1 +1,32 @@
-<p>purchasedetail works!</p>
+<form [formGroup]="myform" (ngSubmit)="save()">
+    <h1 mat-dialog-title>{{ inputdata.title }}</h1>
+
+    <div formArrayName="details" *ngFor="let detail of details.controls; let i = index">
+      <div mat-dialog-content class="d-flex justify-content-center" [formGroupName]="i">
+        <mat-form-field style="width: 70%;">
+          <mat-label [attr.for]="'producto' + i">Producto</mat-label>
+          <mat-select formControlName="product" [attr.id]="'telefono' +i">
+            <mat-option *ngFor="let product of products" [value]="product">
+              {{ product }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="width: 30%;">
+          <input matInput formControlName="quantity" type="number" placeholder="Cantidad" [attr.id]="'telefono' +i" formControlName="quantity">
+          <mat-error *ngIf="myform.get('quantity')?.hasError('required')">La cantidad es obligatoria</mat-error>
+        </mat-form-field>
+        <div>
+          <button mat-raised-button type="button" color="warn" type="button" style="height: 70%;" (click)="delfield(i)">
+            <fa-icon [icon]="faMinus"></fa-icon>
+          </button>
+        </div>
+    </div>
+
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button type="button" (click)="addfield()">Agregar Detalle</button>
+      <button mat-raised-button type="submit" color="primary" [disabled]="myform.invalid">Guardar</button>
+      <button mat-raised-button type="button" color="warn" (click)="closepopup()">Cerrar</button>
+    </div>
+  </form>
+  

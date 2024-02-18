@@ -7,14 +7,12 @@ import { CategorydetailComponent } from './categorydetail/categorydetail.compone
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FilterPipe } from 'src/app/shared/pipes/filter.pipe';
-import { MaterialModule } from 'src/app/shared/modules/material.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
     CategoryComponent,
     CategorydetailComponent,
-    FilterPipe,
   ],
   imports: [
     CommonModule,
@@ -23,7 +21,7 @@ import { MaterialModule } from 'src/app/shared/modules/material.module';
     FormsModule,
     NgxPaginationModule,
     FontAwesomeModule,
-    MaterialModule
+    SharedModule
   ],
 
   exports:[
