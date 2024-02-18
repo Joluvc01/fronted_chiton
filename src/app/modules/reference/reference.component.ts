@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { Utils } from 'src/app/shared/utils/utils';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { IReference } from 'src/app/core/models/reference.model';
+import { IDetail, IReference } from 'src/app/core/models/reference.model';
 import { ReferenceService } from 'src/app/shared/services/reference.service';
 import { ReferencedetailComponent } from './referencedetail/referencedetail.component';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
@@ -24,7 +24,7 @@ export class ReferenceComponent implements OnInit{
   faThumbTack = faThumbTack;
   faTrash = faTrash;
   faInfo = faCircleInfo;
-  faImage = faImage
+  faImage = faImage;
 
   constructor(
     private service:ReferenceService,
@@ -46,6 +46,7 @@ export class ReferenceComponent implements OnInit{
       }
     );
   }
+  
 
   modal(id: number, title: string){
     var _popup = this.dialog.open(ReferencedetailComponent,{
@@ -60,8 +61,61 @@ export class ReferenceComponent implements OnInit{
     })
   }
 
-  async genpdf(id:number): Promise <void> {
+  viewimage(id: number): void {
+    this.service.getReferenceById(id).subscribe((reference: IReference) => {
+  
+      const imageUrl: string = `../../../assets/references_images/${reference.image}`;
+  
+      const newWindow = window.open();
 
+      if (newWindow) {
+        console.log("creando");
+        const containerDiv = newWindow.document.createElement('div');
+        containerDiv.style.display = 'flex';
+        containerDiv.style.justifyContent = 'center';
+        containerDiv.style.alignItems = 'center';
+        containerDiv.style.width = '85%';
+        containerDiv.style.height = '85%';
+        newWindow.document.body.appendChild(containerDiv);
+    
+        const imgElement = newWindow.document.createElement('img');
+        imgElement.src = imageUrl;
+        containerDiv.appendChild(imgElement);
+    
+        const downloadButton = newWindow.document.createElement('button');
+        downloadButton.textContent = 'Descargar imagen';
+        downloadButton.style.position = 'absolute'; // Establecer posición absoluta para el botón
+        downloadButton.style.bottom = '10px'; // Ajustar posición vertical
+        downloadButton.style.right = '10px'; // Ajustar posición horizontal
+        downloadButton.style.zIndex = '1'; // Asegurar que el botón esté encima de la imagen
+        containerDiv.appendChild(downloadButton);
+
+        downloadButton.addEventListener('click', () => {
+          // Crear un enlace temporal para la descarga
+          const link = newWindow.document.createElement('a');
+          link.href = imageUrl;
+          link.download = 'imagen.jpg'; // Nombre de archivo para descargar
+          // Simular clic en el enlace
+          link.click();
+      });
+    
+    } else {
+        console.error("No se pudo abrir la ventana para mostrar la imagen.");
+    }
+    });
+  }
+  
+  async genpdf(id:number): Promise <void> {
+    try {
+      const reference: IReference | undefined = await this.service.getReferenceById(id).toPromise();
+      if (reference) {
+        await this.generatePdf(reference);
+      } else {
+        console.error('La orden de compra no pudo ser obtenida.');
+      }
+    } catch (error) {
+      console.error('Error generando el PDF:', error);
+    }
   }
 
   create(){
@@ -147,9 +201,46 @@ export class ReferenceComponent implements OnInit{
 
 
   async generatePdf(reference: IReference): Promise<void>{
+    const documentDefinition = {
+      content: [
+        { margin: [0,0,0,10], columnGap: 2, columns:  [
+          { image: await this.util.getBase64ImageFromURL("../../../assets/media/logo-nobg.png"), width: 60},
+          { text: `Referencia Nro.${reference.id}`, style: 'header', alignment: 'center' },
+        ]},
+        { text: `Descripcion: ${reference.description}`, style: 'subheader', margin: [0, 0, 0, 5]},
+        { text: `Estado: ${reference.status}`, style: 'subheader', margin: [0, 0, 0, 5]},
+        { text: `Dibujo de la Referencia`, style: 'subheader', margin: [0, 0, 0, 5]},
+        { image: await this.util.getBase64ImageFromURL(`../../../assets/references_images/${reference.image}` ), width: 515, margin: [0,0,0,10]},
+        { text: `Insumos Necesarios`, style: 'subheader', margin: [0, 0, 0, 5]},
+  
+        this.getDetails(reference.details),
+      ],
+      styles: {
+        header: { fontSize: 30, bold: true },
+        subheader: { fontSize: 18},
+      }
+    };
 
+    pdfMake.createPdf(documentDefinition).open();
+  }
+  
+  private getDetails(details: IDetail[]): any {
+    const detailLines = details.map(detail => [detail.product, detail.quantity.toString()]);
+    // Agrega márgenes a cada celda individual
+    const bodyWithMargins = detailLines.map(row => row.map(cell => ({ text: cell, margin: [0, 0, 0, 5], fontSize: 18})));
+    return {
+      layout: 'lightHorizontalLines',
+      table: {
+        widths: ['*', 'auto'],
+        body: [
+          [{ text: 'Producto', style: 'subheader' }, { text: 'Cantidad', style: 'subheader' }],
+          ...bodyWithMargins
+        ],
+      }
+    };
   }
 
-
-
 }
+
+
+

@@ -43,7 +43,9 @@ export class ProductdetailComponent implements OnInit{
   listcategories(): void {
     this.catservice.getAllCategories().subscribe(
       (categories: ICategory[]) => {
-        this.categories = categories.map(category => category.name);
+        this.categories = categories
+        .filter(category => category.status === 'Activado')
+        .map(category => category.name);
       },
       error => {
         console.error('Error al obtener las categorías:', error);

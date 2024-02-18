@@ -40,6 +40,6 @@ export class ReferenceService {
     const formData: FormData = new FormData();
     formData.append('file', file);
 
-    return this._httpClient.post<string>(`${this.baseUrl}/upload-image/${id}`, formData);
+    return this._httpClient.post(`${this.baseUrl}/upload-image/${id}`, formData, { responseType: 'text' });
   }
 }

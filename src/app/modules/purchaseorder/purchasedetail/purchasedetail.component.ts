@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { IProduct } from 'src/app/core/models/product.model';
 import { faMinus} from '@fortawesome/free-solid-svg-icons';
-import { IDetail, IPurchaseOrder } from 'src/app/core/models/purchaseorder.model';
+import { IPurchaseOrder } from 'src/app/core/models/purchaseorder.model';
 import { ProductService } from 'src/app/shared/services/product.service';
 import { PurchaseorderService } from 'src/app/shared/services/purchaseorder.service';
 
@@ -16,7 +16,6 @@ export class PurchasedetailComponent implements OnInit{
 
   myform: FormGroup;
   purchase: IPurchaseOrder | null = null;
-  purdet: IDetail | null = null;
   inputdata: any;
   products: string[] = [];
   faMinus = faMinus;
