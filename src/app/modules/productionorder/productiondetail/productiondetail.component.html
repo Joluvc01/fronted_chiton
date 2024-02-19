@@ -1,0 +1,52 @@
+<form [formGroup]="myform" (ngSubmit)="save()">
+    <h1 mat-dialog-title>{{ inputdata.title }}</h1>
+    <mat-dialog-content>
+        <mat-form-field>
+            <mat-label>Cliente</mat-label>
+            <mat-select formControlName="customer">
+              <mat-option *ngFor="let customer of customers" [value]="customer">
+                {{ customer }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="myform.get('customer')?.hasError('required')">El cliente es obligatoria</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field>
+            <mat-label>Fecha Limite</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="deadline">
+            <mat-hint>YYYY/MM/DD</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker startView="month"></mat-datepicker>
+            <mat-error *ngIf="myform.get('deadline')?.hasError('required')">La fecha limite es obligatoria</mat-error>
+            <mat-error *ngIf="myform.get('deadline')?.hasError('dateNotPast')">La fecha no puede ser menor a la actual</mat-error>
+          </mat-form-field>
+    
+        <div formArrayName="details" *ngFor="let detail of details.controls; let i = index">
+          <div mat-dialog-content class="d-flex justify-content-center" [formGroupName]="i">
+            <mat-form-field style="width: 70%;">
+              <mat-label [attr.for]="'reference' + i">Referencia</mat-label>
+              <mat-select formControlName="reference" [attr.id]="'reference' +i">
+                <mat-option *ngFor="let ref of refs" [value]="ref">
+                  {{ ref }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field style="width: 30%;">
+                <input matInput type="number" placeholder="Cantidad" [attr.id]="'quantity' + i" formControlName="quantity">
+              </mat-form-field>
+              
+            <div>
+              <button mat-raised-button type="button" color="warn" type="button" style="height: 70%;" (click)="delfield(i)">
+                <fa-icon [icon]="faMinus"></fa-icon>
+              </button>
+            </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <div mat-dialog-actions>
+      <button mat-raised-button type="button" (click)="addfield()">Agregar Detalle</button>
+      <button mat-raised-button type="submit" color="primary" [disabled]="myform.invalid">Guardar</button>
+      <button mat-raised-button type="button" color="warn" (click)="closepopup()">Cerrar</button>
+    </div>
+  </form>
+  

@@ -1,57 +1,53 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { faPen, faTrash, faThumbTack, faCircleInfo, faImage} from '@fortawesome/free-solid-svg-icons';
+import { faPen, faTrash, faCircleInfo, faThumbTack} from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 import { Utils } from 'src/app/shared/utils/utils';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { IDetail, IReference } from 'src/app/core/models/reference.model';
-import { ReferenceService } from 'src/app/shared/services/reference.service';
-import { ReferencedetailComponent } from './referencedetail/referencedetail.component';
-import { Router } from '@angular/router';
+import { IDetail, IProductionOrder } from 'src/app/core/models/productionorder.model';
+import { ProductionorderService } from 'src/app/shared/services/productionorder.service';
+import { ProductiondetailComponent } from './productiondetail/productiondetail.component';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
-  selector: 'app-reference',
-  templateUrl: './reference.component.html',
-  styleUrls: ['./reference.component.css']
+  selector: 'app-productionorder',
+  templateUrl: './productionorder.component.html',
+  styleUrls: ['./productionorder.component.css']
 })
-export class ReferenceComponent implements OnInit{
-  references: IReference[] =[];
+export class ProductionorderComponent {
+  prodorders: IProductionOrder[] = [];
   p: number = 1;
   filterId = '';
   filterField = '';
   faPen = faPen;
-  faThumbTack = faThumbTack;
   faTrash = faTrash;
   faInfo = faCircleInfo;
-  faImage = faImage;
+  faThumbTack = faThumbTack;
 
   constructor(
-    private service:ReferenceService,
+    private service: ProductionorderService,
     private util: Utils,
-    private dialog: MatDialog,
-    private router: Router
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-      this.reloadReferenceList();
+    this.reloadProdOrdersList();
   }
 
-  reloadReferenceList(): void {
-    this.service.getAllReferences().subscribe(
+  reloadProdOrdersList(): void {
+    this.service.getAllOp().subscribe(
       (data) => {
-        this.references = data;
+        this.prodorders = data;
       },
-      (error) =>{
-        console.error('Error al cargar la lista de referencias', error)
+      (error) => {
+        console.error('Error al cargar la lista de ordenes de produccion:', error);
       }
     );
   }
-  
 
-  modal(id: number, title: string){
-    var _popup = this.dialog.open(ReferencedetailComponent,{
+  modal(id:number, title:string){
+    var _popup = this.dialog.open(ProductiondetailComponent,{
       width: '30%',
       data:{
         title: title,
@@ -59,23 +55,17 @@ export class ReferenceComponent implements OnInit{
       }
     })
     _popup.afterClosed().subscribe(item =>{    
-      this.reloadReferenceList();
+      this.reloadProdOrdersList();
     })
   }
 
-  viewimage(id: number): void {
-    console.log(`Navegando a la ruta '/image/${id}'`);
-    this.router.navigate(['references/image', id]);
-}
-
-  
-  async genpdf(id:number): Promise <void> {
+  async genpdf(id: number): Promise<void> {
     try {
-      const reference: IReference | undefined = await this.service.getReferenceById(id).toPromise();
-      if (reference) {
-        await this.generatePdf(reference);
+      const prodOrder: IProductionOrder | undefined = await this.service.getOpById(id).toPromise();
+      if (prodOrder) {
+        await this.generatePdf(prodOrder);
       } else {
-        console.error('La orden de compra no pudo ser obtenida.');
+        console.error('La orden de produccion no pudo ser obtenida.');
       }
     } catch (error) {
       console.error('Error generando el PDF:', error);
@@ -83,17 +73,18 @@ export class ReferenceComponent implements OnInit{
   }
 
   create(){
-    this.modal(0, 'Crear Referencia')
+    this.modal(0, 'Crear Orden de Produccion')
   }
 
   edit(id: number): void {
-    this.modal(id, 'Editar Referencia');
+    this.modal(id, 'Editar Orden de Produccion');
   }
 
   status(id: number): void {
     if (id) {
       Swal.fire({
-        title: "¿Estás seguro de que quieres cambiar el estado de esta referencia?",
+        title: "¿Estás seguro de que quieres cambiar el estado de esta orden de produccion?",
+        text: "Esta accion no es reversible!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -109,7 +100,7 @@ export class ReferenceComponent implements OnInit{
                 icon: "success"
               });
               console.log(response);
-              this.reloadReferenceList();
+              this.reloadProdOrdersList();
             },
             (error) => {
               console.error(error);
@@ -129,7 +120,7 @@ export class ReferenceComponent implements OnInit{
   delete(id: number): void {
     if (id) {
       Swal.fire({
-        title: "Esta seguro de eliminar esta referencia?",
+        title: "Esta seguro de eliminar esta orden de produccion?",
         text: "Esta accion no es reversible!",
         icon: "warning",
         showCancelButton: true,
@@ -139,13 +130,13 @@ export class ReferenceComponent implements OnInit{
         cancelButtonText: "Cancelar"
       }).then((result) => {
         if(result.isConfirmed){
-          this.service.deleteReferences(id).subscribe(
+          this.service.deleteOp(id).subscribe(
             (response) => {
               Swal.fire({
-                title: "La orden de compra fue eliminada!",
+                title: "La orden de produccion fue eliminada!",
                 icon: "success"
               });
-              this.reloadReferenceList();
+              this.reloadProdOrdersList();
               console.log(response);
             },
             (error) => {
@@ -162,35 +153,31 @@ export class ReferenceComponent implements OnInit{
       })
     }
   }
-
-
-  async generatePdf(reference: IReference): Promise<void>{
+  
+  async generatePdf(prodOrder: IProductionOrder): Promise<void> {
     const documentDefinition = {
       content: [
         { margin: [0,0,0,10], columnGap: 2, columns:  [
           { image: await this.util.getBase64ImageFromURL("../../../assets/media/logo-nobg.png"), width: 60},
-          { text: `Referencia Nro.${reference.id}`, style: 'header', alignment: 'center' },
+          { text: `Orden de Produccion Nro.${prodOrder.id}`, style: 'header', alignment: 'center' },
         ]},
-        { text: `Descripcion: ${reference.description}`, style: 'subheader', margin: [0, 0, 0, 5]},
-        { text: `Estado: ${reference.status}`, style: 'subheader', margin: [0, 0, 0, 5]},
-        { text: `Dibujo de la Referencia`, style: 'pre', margin: [0, 0, 0, 5]},
-        { image: await this.util.getBase64ImageFromURL(`../../../assets/references_images/${reference.image}` ), width: 515, margin: [0,0,0,10]},
-        { text: `Insumos Necesarios`, style: 'pre', margin: [0, 0, 0, 5]},
-  
-        this.getDetails(reference.details),
+        { text: `Cliente: ${prodOrder.customer}`, style: 'subheader', margin: [0, 0, 0, 5]},
+        { text: `Fecha Generada: ${prodOrder.generationDate}`, style: 'subheader', margin: [0, 0, 0, 5]},
+        { text: `Fecha Limite: ${prodOrder.deadline}`, style: 'subheader', margin: [0, 0, 0, 5]},
+        { text: `Estado: ${prodOrder.status}`, style: 'subheader', margin: [0, 0, 0, 5]},
+        this.getDetails(prodOrder.details),
       ],
       styles: {
         header: { fontSize: 30, bold: true },
         subheader: { fontSize: 18},
-        pre: { fontSize: 20, bold: true},
       }
     };
 
     pdfMake.createPdf(documentDefinition).open();
   }
-  
+
   private getDetails(details: IDetail[]): any {
-    const detailLines = details.map(detail => [detail.product, detail.quantity.toString()]);
+    const detailLines = details.map(detail => [detail.reference, detail.quantity.toString()]);
     // Agrega márgenes a cada celda individual
     const bodyWithMargins = detailLines.map(row => row.map(cell => ({ text: cell, margin: [0, 0, 0, 5], fontSize: 18})));
     return {
@@ -198,7 +185,7 @@ export class ReferenceComponent implements OnInit{
       table: {
         widths: ['*', 'auto'],
         body: [
-          [{ text: 'Producto', style: 'subheader' }, { text: 'Cantidad', style: 'subheader' }],
+          [{ text: 'Referencia', style: 'subheader' }, { text: 'Cantidad', style: 'subheader' }],
           ...bodyWithMargins
         ],
       }
@@ -206,6 +193,3 @@ export class ReferenceComponent implements OnInit{
   }
 
 }
-
-
-

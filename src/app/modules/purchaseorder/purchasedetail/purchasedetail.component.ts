@@ -67,7 +67,6 @@ export class PurchasedetailComponent implements OnInit{
   listproducts(): void {
     this.prodservice.getAllProducts().subscribe(
       (products: IProduct[]) => {
-        // Filtrar los productos con estado 'Activado' y guardar solo los nombres
         this.products = products
           .filter(product => product.status === 'Activado')
           .map(product => product.name);

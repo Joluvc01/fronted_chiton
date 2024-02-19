@@ -1,25 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ReferenceRoutingModule } from './reference-routing.module';
-import { ReferenceComponent } from './reference.component';
-import { ReferencedetailComponent } from './referencedetail/referencedetail.component';
+import { ProductionorderRoutingModule } from './productionorder-routing.module';
+import { ProductionorderComponent } from './productionorder.component';
+import { ProductiondetailComponent } from './productiondetail/productiondetail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { ImageviewerComponent } from './imageviewer/imageviewer.component';
 
 
 @NgModule({
   declarations: [
-    ReferenceComponent,
-    ReferencedetailComponent,
-    ImageviewerComponent
+    ProductionorderComponent,
+    ProductiondetailComponent
   ],
   imports: [
     CommonModule,
-    ReferenceRoutingModule,
+    ProductionorderRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     NgxPaginationModule,
@@ -28,9 +26,8 @@ import { ImageviewerComponent } from './imageviewer/imageviewer.component';
   ],
 
   exports:[
-    ReferenceComponent,
-    ReferencedetailComponent,
-    ImageviewerComponent
+    ProductionorderComponent,
+    ProductiondetailComponent
   ]
 })
-export class ReferenceModule { }
+export class ProductionorderModule { }

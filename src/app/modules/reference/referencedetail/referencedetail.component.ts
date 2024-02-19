@@ -116,11 +116,11 @@ export class ReferencedetailComponent {
         (res) => {
           const id = res.id
           this.uploadimage(id);
-          console.log('Orden de compra guardada exitosamente:', res);
+          console.log('Referencia guardada exitosamente:', res);
           this.closepopup();
         },
         (error) => {
-          console.error('Error al guarda orden de compra:', error);
+          console.error('Error al guardar la Referencia:', error);
         }
       );
     } else {

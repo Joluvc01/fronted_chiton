@@ -164,7 +164,7 @@ export class ProductComponent implements OnInit{
               let purchases = errorMessage.Purchases.join(", ");
               let references = errorMessage.References.join(", ");
               
-              let errorText = "Se produjo un error al producto.";
+              let errorText = "Se produjo un error al eliminar el producto.";
               if (purchases) {
                   errorText += "<br>ID Ordenes de Compra asociadas:" + purchases.replace(/,/g, "<br>");
               }

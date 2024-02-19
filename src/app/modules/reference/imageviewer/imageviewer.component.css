@@ -1,0 +1,19 @@
+.image-container {
+    height: 90%;
+    margin: 0 auto; /* Centra el div horizontalmente */
+    position: relative; /* Permite posicionar absolutamente la imagen dentro del contenedor */
+    display: flex; /* Usa un contenedor flexible para alinear elementos verticalmente */
+    flex-direction: column; /* Coloca los elementos en columna */
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    overflow: hidden; /* Evita que la imagen se desborde del contenedor */
+  }
+  
+  .img-fluid {
+    max-width: 100%; /* La imagen no se desbordará del contenedor */
+    max-height: 95%; /* La imagen no se desbordará del contenedor */
+    width: auto; /* La anchura se ajustará automáticamente */
+    height: auto; /* La altura se ajustará automáticamente */
+  }
+  
+  
