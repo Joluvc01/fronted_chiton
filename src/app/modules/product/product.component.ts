@@ -166,10 +166,10 @@ export class ProductComponent implements OnInit{
               
               let errorText = "Se produjo un error al eliminar el producto.";
               if (purchases) {
-                  errorText += "<br>ID Ordenes de Compra asociadas:" + purchases.replace(/,/g, "<br>");
+                  errorText += "<br>ID Ordenes de Compra asociadas:" + purchases;
               }
               if (references) {
-                  errorText += "<br>ID Referencias asociadas:" + references.replace(/,/g, "<br>");
+                  errorText += "<br>ID Referencias asociadas:" + references;
               }
           
               Swal.fire({

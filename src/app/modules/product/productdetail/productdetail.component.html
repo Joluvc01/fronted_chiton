@@ -25,7 +25,7 @@
         <mat-label>Cantidad</mat-label>
         <input matInput formControlName="stock" type="number" [min]="0"/>
         <mat-error *ngIf="myform.get('stock')?.hasError('required')">La cantidad es obligatoria</mat-error>
-        <mat-error *ngIf="myform.get('stock')?.hasError('notAllowed')">La cantidad no puede ser cero</mat-error>
+        <mat-error *ngIf="myform.get('stock')?.hasError('notAllowed')">La cantidad no puede ser cero o menor</mat-error>
       </mat-form-field>
     </div>
     <div mat-dialog-actions>

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ErrorPageComponent } from './shared/components/error-page/error-page.component';
+import { HomeComponent } from './shared/components/home/home.component';
+import { LoginComponent } from './shared/components/login/login.component';
 
 const routes: Routes = [
 
@@ -30,6 +32,10 @@ const routes: Routes = [
 
   { path: 'reports',
   loadChildren: () => import(`./modules/reports/reports.module`).then(m=>m.ReportsModule)},
+
+  { path: '', component: HomeComponent},
+
+  { path: 'login', component: LoginComponent},
 
   { path: 'error', component: ErrorPageComponent },
   

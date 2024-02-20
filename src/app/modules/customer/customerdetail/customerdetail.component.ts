@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { map } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { ICustomer } from 'src/app/core/models/customer.model';
 import { CustomerService } from 'src/app/shared/services/customer.service';
 
@@ -13,7 +13,8 @@ import { CustomerService } from 'src/app/shared/services/customer.service';
 export class CustomerdetailComponent {
   myform: FormGroup;
   customer: ICustomer | null = null;
-  inputdata: any;
+  inputdata: any; 
+  custsave: string = '';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -22,8 +23,8 @@ export class CustomerdetailComponent {
     private service: CustomerService,
   ) {
     this.myform = this.buildr.group({
-      name: ['', [Validators.required], nameExistValidator(this.service)],
-      ruc: ['', [Validators.required, numberLengthValidator(11)] ],
+      name: ['', [Validators.required], this.nameExistValidator(this.service)],
+      ruc: ['', [numberLengthValidator(11)] ],
       contactNumber: ['', [Validators.required, numberLengthValidator(9)]],
       email: ['', [Validators.required, Validators.email]]
     });
@@ -38,7 +39,8 @@ export class CustomerdetailComponent {
 
   setdata(id: number): void {
     this.service.getCustomerById(id).subscribe((customer: ICustomer) => {
-      this.customer = customer;
+      this.customer = customer,
+      this.custsave = customer.name,
       this.myform.patchValue({
         name: customer.name,
         ruc: customer.ruc,
@@ -71,19 +73,25 @@ export class CustomerdetailComponent {
       console.log('El formulario no es válido.');
     }
   }
-}
 
-function nameExistValidator(service: CustomerService): ValidatorFn {
-  return (control: AbstractControl) => {
-    const name = control.value;
-    if (!name) {
-      return null;
-    }
-
-    return service.checkCustomerExists(name).pipe(
-      map(exists => exists ? { nameExists: true } : null)
-    );
-  };
+  nameExistValidator(service: CustomerService): ValidatorFn {
+    return (control: AbstractControl): Observable<{ [key: string]: any } | null> => {
+      const originalName = this.custsave;
+      const name = control.value;
+  
+      if (name === originalName) {
+        return of(null);
+      }
+  
+      if (!name) {
+        return of(null);
+      }
+  
+      return service.checkCustomerExists(name).pipe(
+        map(exists => exists ? { nameExists: true } : null)
+      );
+    };
+  }
 }
 
 function numberLengthValidator(length: number): ValidatorFn {

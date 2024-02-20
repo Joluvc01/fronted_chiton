@@ -123,7 +123,7 @@ export class CustomerComponent implements OnInit{
               
               let errorText = "Se produjo un error al eliminar el cliente.";
               if (op) {
-                  errorText += "<br>ID Ordenes de produccion asociadas:" + op.replace(/,/g, "<br>");
+                  errorText += "<br>ID Ordenes de produccion asociadas:" + op;
               }
           
               Swal.fire({

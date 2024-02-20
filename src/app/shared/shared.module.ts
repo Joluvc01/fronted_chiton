@@ -22,11 +22,17 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { FilterNamePipe } from './pipes/filtername.pipe';
 import { FilterIdPipe } from './pipes/filterid.pipe';
 import { Utils } from './utils/utils';
+import { CapitalizePipe } from './pipes/capitalize.pipe';
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
     FilterNamePipe,
     FilterIdPipe,
+    CapitalizePipe,
+    HomeComponent,
+    LoginComponent,
   ],
   exports: [
     MatInputModule,
@@ -51,6 +57,7 @@ import { Utils } from './utils/utils';
     MatDialogModule,
     FilterNamePipe,
     FilterIdPipe,
+    CapitalizePipe
   ],
   providers: [
     Utils

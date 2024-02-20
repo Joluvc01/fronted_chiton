@@ -1,6 +1,6 @@
 <form [formGroup]="myform" (ngSubmit)="save()">
     <h1 mat-dialog-title>{{ inputdata.title }}</h1>
-    <div mat-dailog-content>
+    <div mat-dialog-content>
       <mat-form-field>
         <mat-label>Nombre</mat-label>
         <input matInput formControlName="firstname"/>
@@ -28,7 +28,14 @@
         <mat-error *ngIf="myform.get('username')?.hasError('nameExists')">El nombre de usuario ya existe</mat-error>
       </mat-form-field>
       
-      
+      <mat-form-field>
+        <mat-label>Contraseña</mat-label>
+        <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'Toggle password visibility'" type="button">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="myform.get('password')?.hasError('required')">La contraseña es obligatoria</mat-error>
+      </mat-form-field>
     </div>
     <div mat-dialog-actions>
       <button mat-raised-button type="submit" color="primary" [disabled]="myform.invalid">Guardar</button>

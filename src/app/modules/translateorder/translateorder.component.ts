@@ -88,7 +88,7 @@ export class TranslateorderComponent {
   status(id: number): void {
     if (id) {
       Swal.fire({
-        title: "¿Estás seguro de que quieres completar el estado de esta orden de traslado?",
+        title: "¿Estás seguro de que quieres completar esta orden de traslado?",
         text: "Esta accion no es reversible!",
         icon: "warning",
         showCancelButton: true,
@@ -168,12 +168,10 @@ export class TranslateorderComponent {
             { image: await this.util.getBase64ImageFromURL("../../../assets/media/logo-nobg.png"), width: 60},
             { text: `Orden de Traslado Nro.${transalte.id}`, style: 'header', alignment: 'center' },
           ]},
-          { text: `Fecha de Generacion de la Orden de Traslado: ${transalte.generationDate}`, style: 'subheader', margin: [0, 0, 0, 5]},
+          { text: `Fecha de Generacion: ${transalte.generationDate}`, style: 'subheader', margin: [0, 0, 0, 5]},
           { text: `Estado: ${transalte.status}`, style: 'subheader', margin: [0, 0, 0, 5]},
-          { text: `Orden de Produccion Nro.${prodOrder?.id}`, style: 'subheader', margin: [0, 0, 0, 5]},
+          { text: `ID Orden de Produccion:${prodOrder?.id}`, style: 'subheader', margin: [0, 0, 0, 5]},
           { text: `Cliente: ${prodOrder.customer}`, style: 'subheader', margin: [0, 0, 0, 5]},
-          { text: `Fecha Generada: ${prodOrder.generationDate}`, style: 'subheader', margin: [0, 0, 0, 5]},
-          { text: `Fecha Limite: ${prodOrder.deadline}`, style: 'subheader', margin: [0, 0, 0, 5]},
             this.getDetails(prodOrder.details),
   
         ],

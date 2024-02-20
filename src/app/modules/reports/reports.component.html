@@ -1,1 +1,13 @@
-<p>reports works!</p>
+<div class="container">
+    <div class="button-container">
+      <button class="btn btn-lg btn-primary" (click)="genprodspdf(status[0])">Generar PDF de Insumos {{status[0]}}s</button>
+      <button class="btn btn-lg btn-primary" (click)="genprodspdf(status[1])">Generar PDF de Insumos {{status[1]}}s</button>
+      <button class="btn btn-lg btn-primary" (click)="genopspdf(status[2])">Generar PDF de Ordenes de Produccion {{status[2]}}s</button>
+      <button class="btn btn-lg btn-primary" (click)="genopspdf(status[3])">Generar PDF de Ordenes de Produccion {{status[3]}}s</button>
+      <button class="btn btn-lg btn-primary" (click)="genpurpdf(status[2])">Generar PDF de Ordenes de Compra {{status[2]}}s</button>
+      <button class="btn btn-lg btn-primary" (click)="genpurpdf(status[3])">Generar PDF de Ordenes de Compra {{status[3]}}s</button>
+      <button class="btn btn-lg btn-primary" (click)="gentranspdf(status[2])">Generar PDF de Ordenes de Traslado {{status[2]}}s</button>
+      <button class="btn btn-lg btn-primary" (click)="gentranspdf(status[3])">Generar PDF de Ordenes de Traslado {{status[3]}}s</button>
+    </div>
+  </div>
+  

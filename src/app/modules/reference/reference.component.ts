@@ -142,21 +142,30 @@ export class ReferenceComponent implements OnInit{
           this.service.deleteReferences(id).subscribe(
             (response) => {
               Swal.fire({
-                title: "La orden de compra fue eliminada!",
+                title: "La referencia fue eliminada!",
                 icon: "success"
               });
               this.reloadReferenceList();
               console.log(response);
             },
             (error) => {
-              console.error(error);
-              const errorMessage = error.error;
+              console.error("Error object:", error);
+              let errorMessage = JSON.parse(error.error);
+              console.log(errorMessage);
+              
+              let OP = errorMessage.OP.join(", ");
+              
+              let errorText = "Se produjo un error al eliminar la referencia.";
+              if (OP) {
+                  errorText += "<br>ID Ordenes de Produccion asociadas:" + OP;
+              }
+          
               Swal.fire({
-                title: "Error",
-                text: errorMessage,
-                icon: "error"
+                  title: "Error",
+                  html: errorText,
+                  icon: "error"
               });
-            }
+          }
           );
         }
       })

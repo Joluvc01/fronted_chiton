@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { IRegister } from 'src/app/core/models/register.model';
 import { IUser } from 'src/app/core/models/user.model';
 
 @Injectable({
@@ -20,12 +21,12 @@ export class UserService {
     return this._httpClient.get<IUser>(`${this.baseUrl}/${id}`);
   }
 
-  public newUser(category: IUser): Observable<IUser>{
-    return this._httpClient.post<IUser>(`${this.baseUrl}`, category);
+  public newUser(user: IRegister): Observable<IRegister>{
+    return this._httpClient.post<IRegister>(`${this.baseUrl}`, user);
   }
 
-  public updateUser(id: number, category: IUser): Observable<IUser>{
-    return this._httpClient.put<IUser>(`${this.baseUrl}/${id}`, category);
+  public updateUser(id: number, user: IUser): Observable<IUser>{
+    return this._httpClient.put<IUser>(`${this.baseUrl}/${id}`, user);
   }
 
   public setStatus(id: number): Observable<string>{
@@ -38,5 +39,9 @@ export class UserService {
   
   public checkUserExists(name: string): Observable<boolean> {
     return this._httpClient.get<boolean>(`${this.baseUrl}/exist/${name}`);
+  }
+
+  public changePassword(id: number, password: string): Observable<string> {
+    return this._httpClient.post<string>(`${this.baseUrl}/change-password/${id}`, password);
   }
 }

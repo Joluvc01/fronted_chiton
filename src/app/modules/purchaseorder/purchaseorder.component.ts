@@ -177,7 +177,6 @@ export class PurchaseorderComponent implements OnInit {
 
   private getDetails(details: IDetail[]): any {
     const detailLines = details.map(detail => [detail.product, detail.quantity.toString()]);
-    // Agrega márgenes a cada celda individual
     const bodyWithMargins = detailLines.map(row => row.map(cell => ({ text: cell, margin: [0, 0, 0, 5], fontSize: 18})));
     return {
       layout: 'lightHorizontalLines',

@@ -1,1 +1,19 @@
-<p>translatedetail works!</p>
+<form [formGroup]="myform" (ngSubmit)="save()">
+    <h1 mat-dialog-title>{{ inputdata.title }}</h1>
+    <div mat-dailog-content>
+      <mat-form-field>
+        <mat-label>Orden de Produccion</mat-label>
+        <mat-select formControlName="prod">
+            <mat-option *ngFor="let op of op" [value]="op">
+                {{ op }}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="myform.get('prod')?.hasError('required')">La Orden de Produccion es obligatoria</mat-error>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button type="submit" color="primary" [disabled]="myform.invalid">Guardar</button>
+      <button mat-raised-button type="button" color="warn" (click)="closepopup()">Cerrar</button>
+    </div>
+  </form>
+  
