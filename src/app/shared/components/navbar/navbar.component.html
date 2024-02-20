@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary" *ngIf="!isLoginPage()">
     <div class="container-fluid">
       <a class="navbar-brand" routerLink="">Confecciones Chiton</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -6,7 +6,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" *ngIf="hasRole('GERENCIA')">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Gerencia
             </a>
@@ -22,7 +22,7 @@
               <li><a class="dropdown-item" routerLink="reports">Reportes</a></li>
             </ul>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" *ngIf="hasRole('DISENIO')">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Disenio
             </a>
@@ -31,7 +31,7 @@
               <li><a class="dropdown-item" routerLink="products">Productos</a></li>
             </ul>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" *ngIf="hasRole('ALMACEN')">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Almacen
             </a>
@@ -41,17 +41,21 @@
               <li><a class="dropdown-item" routerLink="purchases">Ordenes de Compra</a></li>
             </ul>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" *ngIf="hasRole('PRODUCCION')">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Produccion
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" routerLink="references">Referencias</a></li>
               <li><a class="dropdown-item" routerLink="products">Productos</a></li>
+              <li><a class="dropdown-item" routerLink="productionOrders">Ordenes de Produccion</a></li>
               <li><a class="dropdown-item" routerLink="translateOrders">Traslados</a></li>
             </ul>
           </li>
         </ul>
       </div>
+      <button class="btn btn-primary" (click)="logout()">
+        Cerrar Sesion
+      </button>
     </div>
   </nav>

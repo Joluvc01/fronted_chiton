@@ -21,7 +21,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     FormsModule,
     NgxPaginationModule,
     FontAwesomeModule,
-    SharedModule
+    SharedModule,
   ],
 
   exports:[

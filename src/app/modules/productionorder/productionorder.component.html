@@ -45,7 +45,7 @@
             <th scope="col" class="col-2">Fecha Limite</th>
             <th scope="col" class="col-1">Estado</th>
             <th scope="col" class="col-1">Detalles</th>
-            <th scope="col" class="col-2">Acciones</th>
+            <th scope="col" class="col-2" *ngIf="hasRole('GERENCIA')">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -64,7 +64,7 @@
                  Ver Detalles
                 </button>
             </td>
-            <td>
+            <td *ngIf="hasRole('GERENCIA')">
               <button class="btn btn-primary btn-sm me-2" (click)="edit(prods.id)">
                 <fa-icon [icon]="faPen"></fa-icon>
               </button>
@@ -89,6 +89,6 @@
   </div>
   <div *ngIf="prodorders.length === 0" class="area">
     <div class="alert alert-info mt-4">
-      No hay ordenes de compra disponibles. <label (click)="create()"><u>Click para crear</u></label>
+      No hay ordenes de compra disponibles. <label (click)="create()" *ngIf="hasRole('GERENCIA')"><u>Click para crear</u></label>
     </div>
   </div>

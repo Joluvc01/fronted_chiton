@@ -43,9 +43,10 @@
             <th scope="col" class="col-3">Nombre</th>
             <th scope="col" class="col-2">Categoria</th>
             <th scope="col" class="col-2">Color</th>
-            <th scope="col" class="col-1">Stock</th>
             <th scope="col" class="col-1">Estado</th>
-            <th scope="col" class="col-2">Acciones</th>
+            <th scope="col" class="col-1">Stock</th>
+            
+            <th scope="col" class="col-2" *ngIf="hasRole(['GERENCIA', 'ALMACEN'])">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -57,10 +58,10 @@
             <td>{{ product.name }}</td>
             <td>{{ product.category }}</td>
             <td>{{ product.color }}</td>
-            <td>{{ product.stock }}</td>
             <td>{{ product.status }}</td>
-            <td>
-              <button class="btn btn-success btn-sm me-2" (click)="addStock(product.id)">
+            <td>{{ product.stock }}</td>
+            <td *ngIf="hasRole(['GERENCIA', 'ALMACEN'])"> 
+              <button class="btn btn-success btn-sm me-2"  (click)="addStock(product.id)" >
                 <fa-icon [icon]="faPlus"></fa-icon>
               </button>
               <button class="btn btn-primary btn-sm me-2" (click)="edit(product.id)">
@@ -87,6 +88,6 @@
   </div>
   <div *ngIf="products.length === 0" class="area">
     <div class="alert alert-info mt-4">
-      No hay ordenes de compra disponibles. <label (click)="create()"><u>Click para crear</u></label>
+      No hay ordenes de compra disponibles. <label (click)="create()" *ngIf="hasRole(['GERENCIA', 'ALMACEN'])"><u>Click para crear</u></label>
     </div>
   </div>

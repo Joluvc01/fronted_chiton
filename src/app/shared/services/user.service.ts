@@ -41,7 +41,7 @@ export class UserService {
     return this._httpClient.get<boolean>(`${this.baseUrl}/exist/${name}`);
   }
 
-  public changePassword(id: number, password: string): Observable<string> {
-    return this._httpClient.post<string>(`${this.baseUrl}/change-password/${id}`, password);
+  public changePassword(id: number, password: string): Observable<any> {
+    return this._httpClient.post(`${this.baseUrl}/change-password/${id}`, password ,{responseType: 'text'});
   }
 }

@@ -25,6 +25,9 @@ import { Utils } from './utils/utils';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { TokenInterceptor } from '../core/interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,11 @@ import { LoginComponent } from './components/login/login.component';
     HomeComponent,
     LoginComponent,
   ],
+
+  imports:[
+    ReactiveFormsModule
+  ],
+  
   exports: [
     MatInputModule,
     MatSelectModule,
@@ -57,7 +65,7 @@ import { LoginComponent } from './components/login/login.component';
     MatDialogModule,
     FilterNamePipe,
     FilterIdPipe,
-    CapitalizePipe
+    CapitalizePipe,
   ],
   providers: [
     Utils

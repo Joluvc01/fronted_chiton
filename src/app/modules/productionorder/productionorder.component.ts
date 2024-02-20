@@ -46,6 +46,16 @@ export class ProductionorderComponent {
     );
   }
 
+  hasRole(roles: string | string[]): boolean {
+    const userRole = sessionStorage.getItem('role');
+    
+    if (typeof roles === 'string') {
+      roles = [roles];
+    }
+    
+    return roles.some(role => role === userRole);
+  }
+
   modal(id:number, title:string){
     var _popup = this.dialog.open(ProductiondetailComponent,{
       width: '30%',
