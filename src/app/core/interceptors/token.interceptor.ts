@@ -8,12 +8,9 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler) {
-    console.log('Interceptor: Request intercepted', request);
-
     const token = sessionStorage.getItem('token');
 
     if (token) {
-      console.log('Interceptor: Adding Authorization header with token');
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`

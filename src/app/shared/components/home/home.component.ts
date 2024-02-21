@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -8,8 +7,8 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HomeComponent{
 
-ngOnInit(){
-  console.log(sessionStorage.getItem('token'));
-  
-}
+  firstname: string | null= sessionStorage.getItem('firstname')
+  lastname: string | null= sessionStorage.getItem('lastname')
+  role: string | null= sessionStorage.getItem('role')
+
 }

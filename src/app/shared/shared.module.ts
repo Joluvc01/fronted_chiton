@@ -28,6 +28,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TokenInterceptor } from '../core/interceptors/token.interceptor';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { TokenInterceptor } from '../core/interceptors/token.interceptor';
   ],
 
   imports:[
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule
   ],
   
   exports: [

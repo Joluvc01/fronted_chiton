@@ -26,7 +26,7 @@ export class TranslatedetailComponent {
     private opservice: ProductionorderService,
   ) {
     this.myform = this.buildr.group({
-      prod: ['', [Validators.required]]
+      productionOrder: ['', [Validators.required]]
     });
   }
 
@@ -55,7 +55,7 @@ export class TranslatedetailComponent {
     this.service.getTranslateById(id).subscribe((translate: ITranslateOrder) => {
       this.translate = translate;
       this.myform.patchValue({
-        prod: translate.productionOrder
+        productionOrder: translate.productionOrder
       });
     });
   }
@@ -77,6 +77,8 @@ export class TranslatedetailComponent {
         },
         (error) => {
           console.error('Error al guardar la Orden de traslado:', error);
+          console.log(formData);
+          
         }
       );
     } else {

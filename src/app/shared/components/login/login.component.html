@@ -6,13 +6,15 @@
     <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
       <h1>Iniciar Sesion</h1>
       <div class="form-outline mb-4">
-        <input type="email" class="form-control form-control-lg" formControlName="username">
         <label class="form-label">Nombre de Usuario</label>
+        <input type="email" class="form-control form-control-lg" formControlName="username">
+        <div class="text-danger" *ngIf="hasErrors('username', 'required')">Nombre de Usuario Requerido</div>
       </div>
 
       <div class="form-outline mb-4">
-        <input type="password" class="form-control form-control-lg" formControlName="password">
         <label class="form-label">Contraseña</label>
+        <input type="password" class="form-control form-control-lg" formControlName="password">
+        <div class="text-danger" *ngIf="hasErrors('password', 'required')">Contraseña Requerida</div>
       </div>
 
       <button type="submit" class="btn btn-primary btn-lg btn-block">Ingresar</button>

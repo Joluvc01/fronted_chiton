@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,6 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent{
-
 
   islogged = this.service.currentUserLoginOn.value;
   myform: FormGroup;
@@ -25,15 +25,18 @@ export class LoginComponent{
       })
     }
 
+
   login(): void{
     if(this.myform.valid){
       const formData = this.myform.value;
       this.service.login(formData).subscribe({
-        next: (userData) => {
-          console.log(userData);
-        },
-        error: (errorData) => {
-          console.error(errorData);
+        error: (error) => {
+          console.log(error);
+              Swal.fire({
+                title: "Error",
+                text: error.error,
+                icon: "error"
+              });
         },
         complete: () => {
           console.info("Login completo");
@@ -48,4 +51,10 @@ export class LoginComponent{
       alert("Error al ingresar los datos.");
     }
   }
+
+  hasErrors( controlName: string, errorType: string){
+    return this.myform.get(controlName)?.hasError(errorType) && this.myform.get(controlName)?.touched
+  }
+
+
 }

@@ -11,9 +11,7 @@ export class RoleGuard implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | boolean {
+  canActivate(next: ActivatedRouteSnapshot): Observable<boolean> | boolean {
     const roles = next.data['roles'] as string[]; 
     return this.authService.currentUserLoginOn.pipe(
       map(loggedIn => {

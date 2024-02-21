@@ -88,6 +88,6 @@
   </div>
   <div *ngIf="products.length === 0" class="area">
     <div class="alert alert-info mt-4">
-      No hay ordenes de compra disponibles. <label (click)="create()" *ngIf="hasRole(['GERENCIA', 'ALMACEN'])"><u>Click para crear</u></label>
+      No hay productos disponibles. <label (click)="create()" *ngIf="hasRole(['GERENCIA', 'ALMACEN'])"><u>Click para crear</u></label>
     </div>
   </div>

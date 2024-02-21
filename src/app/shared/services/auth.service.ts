@@ -17,31 +17,25 @@ export class AuthService {
 
   private baseUrl = 'http://localhost:8085/auth'
 
-  login(credentials:ILogin):Observable<any>{
-    return this.http.post<any>(`${this.baseUrl}`,credentials).pipe(
-      tap( (userData) => {
+  login(credentials: ILogin): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}`, credentials).pipe(
+      tap(userData => {
         sessionStorage.setItem("token", userData.token);
-        sessionStorage.setItem("role", userData.role);
+        sessionStorage.setItem("userId", userData.user.id.toString());
+        sessionStorage.setItem("username", userData.user.username);
+        sessionStorage.setItem("firstname", userData.user.firstname);
+        sessionStorage.setItem("lastname", userData.user.lastname);
+        sessionStorage.setItem("status", userData.user.status);
+        sessionStorage.setItem("role", userData.user.role);
         this.currentUserLoginOn.next(true);
       }),
-      map((userData)=> userData.token),
-      catchError(this.handleError)
+      map(userData => userData.token),
     );
   }
+  
 
   logout():void{
     sessionStorage.removeItem("token");
     this.currentUserLoginOn.next(false);
   }
-
-  private handleError(error:HttpErrorResponse){
-    if(error.status===0){
-      console.error('Se ha producio un error ', error.error);
-    }
-    else{
-      console.error('Backend retornó el código de estado ', error);
-    }
-    return throwError(()=> new Error('Algo falló. Por favor intente nuevamente.'));
-  }
-  
 }
