@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2';
-import { filterNavDataByRole } from '../navbar/nav-data';
 
 @Component({
   selector: 'app-login',
@@ -30,21 +29,25 @@ export class LoginComponent {
       const formData = this.myform.value;
       this.service.login(formData).subscribe({
         error: (error) => {
-          console.log(error);
-          Swal.fire({
-            title: 'Error',
-            text: error.error,
-            icon: 'error',
-          });
+          if (error.error==null){
+            Swal.fire({
+              title: 'Error',
+              text: 'Credenciales Invalidas',
+              icon: 'error',
+            });
+          } else{
+            Swal.fire({
+              title: 'Error',
+              text: error.error,
+              icon: 'error',
+            });
+          }
         },
         complete: () => {
           this.router.navigateByUrl('');
           this.myform.reset();
         },
       });
-    } else {
-      this.myform.markAllAsTouched();
-      alert('Error al ingresar los datos.');
     }
   }
 

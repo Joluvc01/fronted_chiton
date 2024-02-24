@@ -17,7 +17,7 @@
         <div class="text-danger" *ngIf="hasErrors('password', 'required')">Contraseña Requerida</div>
       </div>
 
-      <button type="submit" class="btn btn-primary btn-lg btn-block">Ingresar</button>
+      <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="myform.invalid">Ingresar</button>
 
     </div>
   </div>
