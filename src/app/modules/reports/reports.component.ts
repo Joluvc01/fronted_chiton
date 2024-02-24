@@ -58,17 +58,16 @@ export class ReportsComponent {
   }
 
   private getprods(product: IProduct[], status: string): any {
-    const deatilLines = product.filter(product => product.status === status).map(product => [product.id, product.name, product.category, product.color, product.stock])
+    const deatilLines = product.filter(product => product.status === status).map(product => [product.id, product.name, product.category, product.stock])
   const bodyWithMargins = deatilLines.map(row => row.map(cell => ({ text: cell, margin: [0, 0, 0, 5], fontSize: 12})));
     return {
       layout: 'lightHorizontalLines',
       table: {
-        widths: ['auto', '*', '*', '*', 'auto'],
+        widths: ['auto', '*', '*', 'auto'],
         body: [
           [{ text: 'Id', style: 'subheader' }, 
           { text: 'Nombre', style: 'subheader' }, 
           { text: 'Categoria', style: 'subheader' }, 
-          { text: 'Color', style: 'subheader' }, 
           { text: 'Cantidad', style: 'subheader' }],
           ...bodyWithMargins
         ],

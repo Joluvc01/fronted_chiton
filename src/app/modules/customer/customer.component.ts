@@ -14,7 +14,7 @@ import { CustomerdetailComponent } from './customerdetail/customerdetail.compone
 export class CustomerComponent implements OnInit{
   customers: ICustomer[] = [];
   p: number = 1;
-  filterId = '';
+  filterName = '';
   filterField = '';
   faPen = faPen;
   faThumbTack = faThumbTack;

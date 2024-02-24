@@ -1,61 +1,24 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary" *ngIf="!isLoginPage()">
-    <div class="container-fluid">
-      <a class="navbar-brand" routerLink="">Confecciones Chiton</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''" *ngIf="!isLoginPage()">
+   <div class="logo-container">
+      <button class="logo" (click)="toggleCollapse()">C</button>
+      <div class="logo-text" *ngIf="collapsed">Chiton</div>
+      <button class="btn-close" *ngIf="collapsed" (click)="closeSidenav()">
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item dropdown" *ngIf="hasRole('GERENCIA')">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Gerencia
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" routerLink="users">Usuarios</a></li>
-              <li><a class="dropdown-item" routerLink="customers">Clientes</a></li>
-              <li><a class="dropdown-item" routerLink="categories">Categorias</a></li>
-              <li><a class="dropdown-item" routerLink="products">Productos</a></li>
-              <li><a class="dropdown-item" routerLink="purchases">Ordenes de Compra</a></li>
-              <li><a class="dropdown-item" routerLink="references">Referencias</a></li>
-              <li><a class="dropdown-item" routerLink="productionOrders">Ordenes de Produccion</a></li>
-              <li><a class="dropdown-item" routerLink="translateOrders">Traslados</a></li>
-              <li><a class="dropdown-item" routerLink="reports">Reportes</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown" *ngIf="hasRole('DISENIO')">
-            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Disenio
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" routerLink="references">Referencias</a></li>
-              <li><a class="dropdown-item" routerLink="products">Productos</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown" *ngIf="hasRole('ALMACEN')">
-            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Almacen
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" routerLink="categories">Categorias</a></li>
-              <li><a class="dropdown-item" routerLink="products">Productos</a></li>
-              <li><a class="dropdown-item" routerLink="purchases">Ordenes de Compra</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown" *ngIf="hasRole('PRODUCCION')">
-            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Produccion
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" routerLink="references">Referencias</a></li>
-              <li><a class="dropdown-item" routerLink="products">Productos</a></li>
-              <li><a class="dropdown-item" routerLink="productionOrders">Ordenes de Produccion</a></li>
-              <li><a class="dropdown-item" routerLink="translateOrders">Traslados</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <button class="btn btn-primary" (click)="logout()">
-        Cerrar Sesion
-      </button>
-    </div>
-  </nav>
+   </div>
+   <ul class="sidenav-nav">
+      <li class="sidenav-nav-item" *ngFor="let data of navData" >
+         <a class="sidenav-nav-link" (click)="data.action" [routerLink]="[data.routeLink]"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <i class="sidenav-link-icon"><fa-icon [icon]="data.icon"></fa-icon></i>
+            <span class="sidenav-link-text" *ngIf="collapsed">{{data.label}}</span>
+         </a>
+      </li>
+      <li class="sidenav-nav-item" >
+         <a class="sidenav-nav-link" (click)="logout()" >
+            <i class="sidenav-link-icon"><fa-icon [icon]="faClose"></fa-icon></i>
+            <span class="sidenav-link-text" *ngIf="collapsed">Cerrar Sesion</span>
+         </a>
+      </li>
+   </ul>   
+</div>

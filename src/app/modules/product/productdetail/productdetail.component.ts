@@ -28,7 +28,6 @@ export class ProductdetailComponent implements OnInit{
     this.myform = this.buildr.group({
       name: ['', [Validators.required]],
       category: ['', [Validators.required]],
-      color: ['',[Validators. required]],
       stock: [0,[Validators.required, Validators.min(1), notAllowed(/^0/)]],
     });
   }
@@ -60,7 +59,6 @@ export class ProductdetailComponent implements OnInit{
       this.myform.patchValue({
         name: product.name,
         category: product.category,
-        color: product.color,
         stock: product.stock
       });
     });

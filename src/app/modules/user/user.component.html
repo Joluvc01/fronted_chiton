@@ -1,5 +1,5 @@
-<div class="area" *ngIf="users.length > 0">
-    <div class="d-flex mt-4 justify-content-between">
+  <div *ngIf="users.length > 0">
+    <div class="d-flex justify-content-between">
       <div class="search">
         <form id="searchForm">
           <div class="input-group bg-light">
@@ -11,9 +11,6 @@
               name="filterId"
               [(ngModel)]="filterId"
             />
-            <button type="submit" class="btn">
-              <img src="../../../../assets/media/search.svg" width="25px" />
-            </button>
           </div>
         </form>
       </div>
@@ -39,13 +36,13 @@
       <table class="table table-sm text-center mt-4">
         <thead class="table">
           <tr>
-            <th scope="col" class="col-1">#</th>
-            <th scope="col" class="col-2">Nombre</th>
-            <th scope="col" class="col-2">Apellido</th>
-            <th scope="col" class="col-2">Nombre de Usuario</th>
-            <th scope="col" class="col-1">Estado</th>
-            <th scope="col" class="col-2">Rol</th>
-            <th scope="col" class="col-2">Acciones</th>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Nombre de Usuario</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Rol</th>
+            <th scope="col">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -85,9 +82,8 @@
       </div>
     </div>
   </div>
-  <div *ngIf="users.length === 0" class="area">
+  <div *ngIf="users.length === 0">
     <div class="alert alert-info mt-4">
       No hay usuarios disponibles. <label (click)="create()"><u>Click para crear</u></label>
     </div>
   </div>
-  

@@ -26,9 +26,10 @@ import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { TokenInterceptor } from '../core/interceptors/token.interceptor';
 import { CommonModule } from '@angular/common';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { BodyComponent } from './components/body/body.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -41,8 +42,10 @@ import { CommonModule } from '@angular/common';
 
   imports:[
     ReactiveFormsModule,
-    CommonModule
-  ],
+    CommonModule,
+    NgxMatSelectSearchModule,
+    RouterModule
+    ],
   
   exports: [
     MatInputModule,

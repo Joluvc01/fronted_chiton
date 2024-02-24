@@ -1,3 +1,4 @@
-<app-navbar></app-navbar>
-<!-- app.component.html -->
-<router-outlet></router-outlet>
+<app-navbar (onToggleSideNav)="onToggleSideNav($event)"></app-navbar>
+<app-body 
+[collapsed]="isSideNavCollapsed"
+></app-body>

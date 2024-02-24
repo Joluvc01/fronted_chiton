@@ -15,12 +15,6 @@
         </mat-select>
         <mat-error *ngIf="myform.get('category')?.hasError('required')">La categoría es obligatoria</mat-error>
       </mat-form-field>
-      
-      <mat-form-field>
-        <mat-label>Color</mat-label>
-        <input matInput formControlName="color"/>
-        <mat-error *ngIf="myform.get('color')?.hasError('required')">El color es obligatorio</mat-error>
-      </mat-form-field>
       <mat-form-field>
         <mat-label>Cantidad</mat-label>
         <input matInput formControlName="stock" type="number" [min]="0"/>

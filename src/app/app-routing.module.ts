@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'categories', canActivate: [RoleGuard], data: { roles: ['GERENCIA', 'ALMACEN']},
   loadChildren: () => import(`./modules/category/category.module`).then(m => m.CategoryModule)},
 
-  { path: 'products',  canActivate: [RoleGuard], data: { roles: ['GERENCIA', 'ALMACEN', 'PRODUCCION', 'DISENIO']},
+  { path: 'products',  canActivate: [RoleGuard], data: { roles: []},
   loadChildren: () => import(`./modules/product/product.module`).then(m =>m.ProductModule)},
 
   { path: 'purchases', canActivate: [RoleGuard], data: { roles: ['GERENCIA', 'ALMACEN']},

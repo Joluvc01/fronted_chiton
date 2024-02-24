@@ -8,7 +8,6 @@ import { ILogin } from 'src/app/core/models/login.model';
   providedIn: 'root'
 })
 export class AuthService {
-
   currentUserLoginOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient) { 
@@ -32,10 +31,9 @@ export class AuthService {
       map(userData => userData.token),
     );
   }
-  
 
   logout():void{
-    sessionStorage.removeItem("token");
+    sessionStorage.clear();
     this.currentUserLoginOn.next(false);
   }
 }

@@ -8,18 +8,22 @@ import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ErrorPageComponent } from './shared/components/error-page/error-page.component';
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BodyComponent } from './shared/components/body/body.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     ErrorPageComponent,
+    BodyComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FontAwesomeModule
   ],
     providers: [
       {
