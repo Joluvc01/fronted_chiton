@@ -1,0 +1,24 @@
+<form [formGroup]="myform" class="container py-5 h-100" (ngSubmit)="login()">
+  <div class="row d-flex align-items-center justify-content-center h-100">
+    <div class="col-md-8 col-lg-7 col-xl-6">
+      <img src="../../../../assets/media/logo.png" class="img-fluid" alt="Phone image">
+    </div>
+    <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+      <h1>Iniciar Sesion</h1>
+      <div class="form-outline mb-4">
+        <label class="form-label">Nombre de Usuario</label>
+        <input type="email" class="form-control form-control-lg" formControlName="username">
+        <div class="text-danger" *ngIf="hasErrors('username', 'required')">Nombre de Usuario Requerido</div>
+      </div>
+
+      <div class="form-outline mb-4">
+        <label class="form-label">Contraseña</label>
+        <input type="password" class="form-control form-control-lg" formControlName="password">
+        <div class="text-danger" *ngIf="hasErrors('password', 'required')">Contraseña Requerida</div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="myform.invalid">Ingresar</button>
+
+    </div>
+  </div>
+</form>

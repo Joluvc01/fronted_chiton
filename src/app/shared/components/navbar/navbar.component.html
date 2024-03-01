@@ -1,0 +1,24 @@
+<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''" *ngIf="!isLoginPage()">
+   <div class="logo-container">
+      <button class="logo" (click)="toggleCollapse()">C</button>
+      <div class="logo-text" *ngIf="collapsed">Chiton</div>
+      <button class="btn-close" *ngIf="collapsed" (click)="closeSidenav()">
+      </button>
+   </div>
+   <ul class="sidenav-nav">
+      <li class="sidenav-nav-item" *ngFor="let data of navData" >
+         <a class="sidenav-nav-link" (click)="data.action" [routerLink]="[data.routeLink]"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <i class="sidenav-link-icon"><fa-icon [icon]="data.icon"></fa-icon></i>
+            <span class="sidenav-link-text" *ngIf="collapsed">{{data.label}}</span>
+         </a>
+      </li>
+      <li class="sidenav-nav-item" >
+         <a class="sidenav-nav-link" (click)="logout()" >
+            <i class="sidenav-link-icon"><fa-icon [icon]="faClose"></fa-icon></i>
+            <span class="sidenav-link-text" *ngIf="collapsed">Cerrar Sesion</span>
+         </a>
+      </li>
+   </ul>   
+</div>

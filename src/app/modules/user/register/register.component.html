@@ -1,0 +1,48 @@
+<form [formGroup]="myform" (ngSubmit)="save()">
+    <h1 mat-dialog-title>{{ inputdata.title }}</h1>
+    <div mat-dialog-content>
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="firstname"/>
+        <mat-error *ngIf="myform.get('firstname')?.hasError('required')">El nombre es obligatorio</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Apellido</mat-label>
+        <input matInput formControlName="lastname"/>
+        <mat-error *ngIf="myform.get('lastname')?.hasError('required')">El apellido es obligatorio</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Rol</mat-label>
+        <mat-select formControlName="role">
+          <mat-option value="GERENCIA">Gerencia</mat-option>
+          <mat-option value="PRODUCCION">Produccion</mat-option>
+          <mat-option value="ALMACEN">Almacen</mat-option>
+          <mat-option value="DISENIO">Disenio</mat-option>
+        </mat-select>
+        <mat-error *ngIf="myform.get('role')?.hasError('required')">El rol es obligatorio</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Nombre de Usuario</mat-label>
+        <input matInput formControlName="username"/>
+        <mat-error *ngIf="myform.get('username')?.hasError('required')">El nombre de usuario es obligatorio</mat-error>
+        <mat-error *ngIf="myform.get('username')?.hasError('nameExists')">El nombre de usuario ya existe</mat-error>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <mat-label>Contraseña</mat-label>
+        <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'Toggle password visibility'" type="button">
+          <mat-icon>
+            <fa-icon [icon]="hidePassword ? faEyeSlash : faEye"></fa-icon>
+          </mat-icon>
+          
+        </button>
+        <mat-error *ngIf="myform.get('password')?.hasError('required')">La contraseña es obligatoria</mat-error>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button type="submit" color="primary" [disabled]="myform.invalid">Guardar</button>
+      <button mat-raised-button type="button" color="warn" (click)="closepopup()">Cerrar</button>
+    </div>
+  </form>
+  

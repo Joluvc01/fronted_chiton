@@ -1,0 +1,20 @@
+<form [formGroup]="myform" (ngSubmit)="save()">
+    <h1 mat-dialog-title>{{ inputdata.title }}</h1>
+    <div mat-dailog-content>
+      <mat-form-field>
+        <mat-label>Orden de Produccion</mat-label>
+        <mat-select formControlName="productionOrder">
+          <input class="filter" (keyup)="filterOps($event)" placeholder="Buscar Op">
+            <mat-option *ngFor="let op of filteredOps" [value]="op">
+                {{ op }}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="myform.get('productionOrder')?.hasError('required')">La Orden de Produccion es obligatoria</mat-error>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button type="submit" color="primary" [disabled]="myform.invalid">Guardar</button>
+      <button mat-raised-button type="button" color="warn" (click)="closepopup()">Cerrar</button>
+    </div>
+  </form>
+  

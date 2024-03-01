@@ -1,0 +1,119 @@
+<div *ngIf="references.length > 0">
+  <div class="d-flex justify-content-between">
+    <div class="search">
+      <form id="searchForm">
+        <div class="input-group bg-light">
+          <input
+            id="searchInput"
+            class="form-control bg-transparent border-0"
+            type="number"
+            placeholder="Buscar por ID"
+            name="filterId"
+            [(ngModel)]="filterId"
+          />
+        </div>
+      </form>
+    </div>
+
+    <div class="d-flex align-items-center">
+      <h4 class="me-3 mb-0" style="white-space: nowrap">Filtrar por estado:</h4>
+      <select
+        class="form-select mb-0 me-2"
+        id="estadoSelect"
+        name="filterField"
+        [(ngModel)]="filterField"
+      >
+        <option value="">Todos</option>
+        <option value="Completo">Completo</option>
+        <option value="Incompleto">Incompleto</option>
+      </select>
+    </div>
+
+    <div>
+      <button class="btn btn-primary" (click)="create()" *ngIf="hasRole(['GERENCIA', 'DISENIO'])">
+        Crear nueva Referencia
+      </button>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <table class="table table-sm text-center mt-4">
+      <thead class="table">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Descripcion</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Imagen</th>
+          <th scope="col">Detalles</th>
+          <th scope="col" *ngIf="hasRole(['GERENCIA', 'DISENIO'])">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let reference of references
+              | filterid : 'status' : filterField : filterId
+              | paginate : { itemsPerPage: 17, currentPage: p }
+          "
+        >
+          <td>{{ reference.id }}</td>
+          <td>{{ reference.description }}</td>
+          <td>{{ reference.status }}</td>
+          <td>
+            <button
+              class="btn btn-primary btn-sm me-2"
+              (click)="viewimage(reference.id)"
+            >
+              <fa-icon [icon]="faImage"></fa-icon>
+              Ver Imagen
+            </button>
+          </td>
+          <td>
+            <button
+              class="btn btn-primary btn-sm me-2"
+              (click)="genpdf(reference.id)"
+            >
+              <fa-icon [icon]="faInfo"></fa-icon>
+              Ver Detalles
+            </button>
+          </td>
+          <td *ngIf="hasRole(['GERENCIA', 'DISENIO'])">
+            <button
+              class="btn btn-primary btn-sm me-2"
+              (click)="edit(reference.id)"
+            >
+              <fa-icon [icon]="faPen"></fa-icon>
+            </button>
+            <button
+              class="btn btn-warning btn-sm me-2"
+              (click)="status(reference.id)"
+            >
+              <fa-icon [icon]="faThumbTack"></fa-icon>
+            </button>
+            <button
+              class="btn btn-danger btn-sm me-2"
+              (click)="delete(reference.id)"
+            >
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-start">
+      <pagination-controls
+        (pageChange)="p = $event"
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+      ></pagination-controls>
+    </div>
+  </div>
+</div>
+<div *ngIf="references.length === 0">
+  <div class="alert alert-info mt-4">
+    No hay referencias disponibles.
+    <label (click)="create()" *ngIf="hasRole(['GERENCIA', 'DISENIO'])"
+      ><u>Click para crear</u></label
+    >
+  </div>
+</div>

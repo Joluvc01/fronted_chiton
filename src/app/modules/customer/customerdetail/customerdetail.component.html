@@ -1,0 +1,32 @@
+<form [formGroup]="myform" (ngSubmit)="save()">
+    <h1 mat-dialog-title>{{ inputdata.title }}</h1>
+    <div mat-dailog-content>
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="name"/>
+        <mat-error *ngIf="myform.get('name')?.hasError('required')">El nombre es obligatorio</mat-error>
+        <mat-error *ngIf="myform.get('name')?.hasError('nameExists')">El nombre ya existe</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Ruc</mat-label>
+        <input matInput formControlName="ruc" type="number"/>
+        <mat-error *ngIf="myform.get('ruc')?.hasError('numberLength')">El ruc debe tener 11 caracteres</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Numero de Contacto</mat-label>
+        <input matInput formControlName="contactNumber" type="number"/>
+        <mat-error *ngIf="myform.get('contactNumber')?.hasError('numberLength')">El numero de contacto debe tener 9 caracteres</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email"/>
+        <mat-error *ngIf="myform.get('email')?.hasError('required')">El email es obligatorio</mat-error>
+        <mat-error *ngIf="myform.get('email')?.hasError('email')">Ingrese un email valido</mat-error>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button type="submit" color="primary" [disabled]="myform.invalid">Guardar</button>
+      <button mat-raised-button type="button" color="warn" (click)="closepopup()">Cerrar</button>
+    </div>
+  </form>
+  

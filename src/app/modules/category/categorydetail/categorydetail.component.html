@@ -1,0 +1,15 @@
+<form [formGroup]="myform" (ngSubmit)="save()">
+  <h1 mat-dialog-title>{{ inputdata.title }}</h1>
+  <div mat-dailog-content>
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name"/>
+      <mat-error *ngIf="myform.get('name')?.hasError('required')">El nombre es obligatorio</mat-error>
+      <mat-error *ngIf="myform.get('name')?.hasError('nameExists')">El nombre ya existe</mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button type="submit" color="primary" [disabled]="myform.invalid">Guardar</button>
+    <button mat-raised-button type="button" color="warn" (click)="closepopup()">Cerrar</button>
+  </div>
+</form>
