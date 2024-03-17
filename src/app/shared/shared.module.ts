@@ -27,8 +27,6 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import { BodyComponent } from './components/body/body.component';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
@@ -43,7 +41,6 @@ import { RouterModule } from '@angular/router';
   imports:[
     ReactiveFormsModule,
     CommonModule,
-    NgxMatSelectSearchModule,
     RouterModule
     ],
   

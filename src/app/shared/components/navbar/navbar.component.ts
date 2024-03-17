@@ -23,9 +23,11 @@ export class NavbarComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
+    console.log(this.authService.currentUserLoginOn);
+    
     this.authService.currentUserLoginOn.subscribe(isLoggedIn => {
       if (isLoggedIn) {
-        const role = sessionStorage.getItem('role');
+        const role = localStorage.getItem('role');
         if (role !== null) {
           this.navData = filterNavDataByRole(role);
         }

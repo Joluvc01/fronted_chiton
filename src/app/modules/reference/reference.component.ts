@@ -50,7 +50,7 @@ export class ReferenceComponent implements OnInit{
   }
 
   hasRole(roles: string | string[]): boolean {
-    const userRole = sessionStorage.getItem('role');
+    const userRole = localStorage.getItem('role');
     
     if (typeof roles === 'string') {
       roles = [roles];

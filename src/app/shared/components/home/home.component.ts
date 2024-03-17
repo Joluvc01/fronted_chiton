@@ -7,8 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent{
 
-  firstname: string | null= sessionStorage.getItem('firstname')
-  lastname: string | null= sessionStorage.getItem('lastname')
-  role: string | null= sessionStorage.getItem('role')
+  firstname: string | null= localStorage.getItem('firstname')
+  lastname: string | null= localStorage.getItem('lastname')
+  role: string | null= localStorage.getItem('role')
 
 }

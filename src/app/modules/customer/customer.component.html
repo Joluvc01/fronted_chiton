@@ -55,7 +55,7 @@
           <tr
             *ngFor="
               let customer of customers
-                | filterid : 'status' : filterField : filterName
+                | filtername : 'status' : filterField : filterName
                 | paginate : { itemsPerPage: 17, currentPage: p }
             "
           >

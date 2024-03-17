@@ -1,4 +1,4 @@
-import { Component, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -9,8 +9,8 @@ import Swal from 'sweetalert2';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
-  islogged = this.service.currentUserLoginOn.value;
+export class LoginComponent implements OnInit {
+  islogged: boolean = false;
   myform: FormGroup;
 
   constructor(
@@ -24,25 +24,19 @@ export class LoginComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.islogged = this.service.isLogin();
+  }
+
   login(): void {
     if (this.myform.valid) {
       const formData = this.myform.value;
       this.service.login(formData).subscribe({
-        error: (error) => {
-          if (error.error==null){
-            Swal.fire({
-              title: 'Error',
-              text: 'Credenciales Invalidas',
-              icon: 'error',
-            });
-          } else{
-            Swal.fire({
-              title: 'Error',
-              text: error.error,
-              icon: 'error',
-            });
-          }
-        },
+        error: (error) => Swal.fire({
+          title: 'Error',
+          text: 'Credenciales Invalidas',
+          icon: 'error',
+        }),
         complete: () => {
           this.router.navigateByUrl('');
           this.myform.reset();
