@@ -71,16 +71,16 @@
               Ver Detalles
             </button>
           </td>
-          <td *ngIf="hasRole(['GERENCIA','PRODUCCION'])">
+          <td *ngIf="hasRole(['GERENCIA', 'PRODUCCION'])">
             <button
-              *ngIf="hasRole('GERENCIA')"
+              *ngIf="hasRole('GERENCIA', prods.status)"
               class="btn btn-primary btn-sm me-2"
               (click)="edit(prods.id)"
             >
               <fa-icon [icon]="faPen"></fa-icon>
             </button>
             <button
-              *ngIf="hasRole(['GERENCIA','PRODUCCION'])"
+              *ngIf="hasRole(['GERENCIA','PRODUCCION'], prods.status)"
               class="btn btn-warning btn-sm me-2"
               (click)="status(prods.id)"
             >

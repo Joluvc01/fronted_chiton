@@ -50,6 +50,16 @@ export class TranslateorderComponent {
     );
   }
 
+  hasRole(roles: string | string[], status?: string): boolean {
+    const userRole = localStorage.getItem('role');
+    if (typeof roles === 'string') {
+      roles = [roles];
+    }
+    const hasRoles = roles.some(role => role === userRole);
+    const isStatusIncomplete = status && status.trim().toLowerCase() === 'incompleto';
+    return hasRoles && (isStatusIncomplete || !status);
+  }
+
   modal(id: number, title:string){
     var _popup = this.dailog.open(TranslatedetailComponent,{
       width: '30%',

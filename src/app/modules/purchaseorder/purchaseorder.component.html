@@ -69,12 +69,14 @@
           </td>
           <td>
             <button
+              *ngIf="hasRole(['GERENCIA','ALMACEN'], purchase.status)"
               class="btn btn-primary btn-sm me-2"
               (click)="edit(purchase.id)"
             >
               <fa-icon [icon]="faPen"></fa-icon>
             </button>
             <button
+              *ngIf="hasRole(['GERENCIA','ALMACEN'], purchase.status)"
               class="btn btn-warning btn-sm me-2"
               (click)="status(purchase.id)"
             >
