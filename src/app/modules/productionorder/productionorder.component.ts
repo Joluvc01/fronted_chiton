@@ -150,11 +150,11 @@ export class ProductionorderComponent {
               console.log(response);
             },
             (error) => {
-              console.error(error);
-              const errorMessage = error.error;
+              let errorText = "Se produjo un error al eliminar la orden de Produccion.";
+              errorText += "<br>ID Ordenes de Traslado asociado:" + error.error;
               Swal.fire({
                 title: "Error",
-                text: errorMessage,
+                html: errorText,
                 icon: "error"
               });
             }

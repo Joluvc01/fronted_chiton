@@ -15,15 +15,15 @@
         <div mat-dialog-content class="d-flex justify-content-center" [formGroupName]="i">
           <mat-form-field style="width: 70%;">
             <mat-label [attr.for]="'producto' + i">Producto</mat-label>
-            <mat-select formControlName="product" [attr.id]="'telefono' +i">
-              <input class="filter" (keyup)="filterProducts($event)" placeholder="Buscar Producto">
+            <mat-select formControlName="product" [attr.id]="'product' +i" (selectionChange)="clearInput(i)">
+              <input [attr.id]="'filter' +i" class="filter" (keyup)="filterProducts($event)" placeholder="Buscar Producto">
               <mat-option *ngFor="let product of filteredProducts" [value]="product">
                 {{ product }}
               </mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field style="width: 30%;">
-            <input matInput formControlName="quantity" type="number" placeholder="Cantidad" [attr.id]="'telefono' +i" formControlName="quantity">
+            <input matInput formControlName="quantity" type="number" [min]="1" placeholder="Cantidad" [attr.id]="'quantity' +i" formControlName="quantity">
             <mat-error *ngIf="myform.get('quantity')?.hasError('required')">La cantidad es obligatoria</mat-error>
           </mat-form-field>
           <div>

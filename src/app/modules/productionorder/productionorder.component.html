@@ -46,7 +46,7 @@
           <th scope="col">Fecha Limite</th>
           <th scope="col">Estado</th>
           <th scope="col">Detalles</th>
-          <th scope="col" *ngIf="hasRole('GERENCIA')">Acciones</th>
+          <th scope="col" *ngIf="hasRole(['GERENCIA','PRODUCCION'])">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -71,20 +71,23 @@
               Ver Detalles
             </button>
           </td>
-          <td *ngIf="hasRole('GERENCIA')">
+          <td *ngIf="hasRole(['GERENCIA','PRODUCCION'])">
             <button
+              *ngIf="hasRole('GERENCIA')"
               class="btn btn-primary btn-sm me-2"
               (click)="edit(prods.id)"
             >
               <fa-icon [icon]="faPen"></fa-icon>
             </button>
             <button
+              *ngIf="hasRole(['GERENCIA','PRODUCCION'])"
               class="btn btn-warning btn-sm me-2"
               (click)="status(prods.id)"
             >
               <fa-icon [icon]="faThumbTack"></fa-icon>
             </button>
             <button
+              *ngIf="hasRole('GERENCIA')"
               class="btn btn-danger btn-sm me-2"
               (click)="delete(prods.id)"
             >

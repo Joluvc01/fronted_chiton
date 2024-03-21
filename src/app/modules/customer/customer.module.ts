@@ -8,12 +8,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { OnlynumbersDirective } from 'src/app/shared/directives/onlynumbers.directive';
 
 
 @NgModule({
   declarations: [
     CustomerComponent,
-    CustomerdetailComponent
+    CustomerdetailComponent,
   ],
   imports: [
     CommonModule,

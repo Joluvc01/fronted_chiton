@@ -9,12 +9,12 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Ruc</mat-label>
-        <input matInput formControlName="ruc" type="number"/>
+        <input matInput formControlName="ruc" type="text" appOnlynumbers/>
         <mat-error *ngIf="myform.get('ruc')?.hasError('numberLength')">El ruc debe tener 11 caracteres</mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Numero de Contacto</mat-label>
-        <input matInput formControlName="contactNumber" type="number"/>
+        <input matInput formControlName="contactNumber" type="text" appOnlynumbers/>
         <mat-error *ngIf="myform.get('contactNumber')?.hasError('numberLength')">El numero de contacto debe tener 9 caracteres</mat-error>
       </mat-form-field>
       <mat-form-field>

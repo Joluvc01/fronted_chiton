@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
       this.service.login(formData).subscribe({
         error: (error) => Swal.fire({
           title: 'Error',
-          text: 'Credenciales Invalidas',
+          text: error.error.error,
           icon: 'error',
         }),
         complete: () => {

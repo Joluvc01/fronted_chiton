@@ -28,6 +28,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { OnlynumbersDirective } from './directives/onlynumbers.directive';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { RouterModule } from '@angular/router';
     CapitalizePipe,
     HomeComponent,
     LoginComponent,
+    OnlynumbersDirective
   ],
 
   imports:[
@@ -68,6 +70,7 @@ import { RouterModule } from '@angular/router';
     FilterNamePipe,
     FilterIdPipe,
     CapitalizePipe,
+    OnlynumbersDirective
   ],
   providers: [
     Utils

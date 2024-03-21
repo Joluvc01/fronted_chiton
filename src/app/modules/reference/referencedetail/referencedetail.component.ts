@@ -35,7 +35,7 @@ export class ReferencedetailComponent {
   ) {
     this.myform = this.buildr.group({
       description: ['', [Validators.required]],
-      image: [''],
+      image: '',
       details : this.buildr.array([this.initform()])
     });
   }
@@ -50,15 +50,15 @@ export class ReferencedetailComponent {
 
   initform(): FormGroup {
     return this.buildr.group({
-      product: '',
-      quantity: ''
+      product: ['', [Validators.required]],
+      quantity: [1, [Validators.required]],
     });
   }
 
   addfield() {
     const detailformgroup = this.buildr.group({
-      product: '',
-      quantity: ''
+      product: ['', [Validators.required]],
+      quantity: [1, [Validators.required]],
     });
     this.details.push(detailformgroup);
     
@@ -98,6 +98,15 @@ export class ReferencedetailComponent {
       product.toLowerCase().includes(searchTerm)
     );
   }
+
+  clearInput(index: number): void {
+    const inputElement = document.getElementById(`filter${index}`) as HTMLInputElement;
+    if (inputElement) {
+      inputElement.value = '';
+    }
+    this.filteredProducts = this.products;
+  }
+  
 
 
   setdata(id: number): void {

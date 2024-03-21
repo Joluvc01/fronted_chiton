@@ -24,8 +24,8 @@ export class CustomerdetailComponent {
   ) {
     this.myform = this.buildr.group({
       name: ['', [Validators.required], this.nameExistValidator(this.service)],
-      ruc: ['', [numberLengthValidator(11)] ],
-      contactNumber: ['', [Validators.required, numberLengthValidator(9)]],
+      ruc: ['', [this.numberLengthValidator(11)] ],
+      contactNumber: ['', [Validators.required, this.numberLengthValidator(9)]],
       email: ['', [Validators.required, Validators.email]]
     });
   }
@@ -92,17 +92,17 @@ export class CustomerdetailComponent {
       );
     };
   }
-}
 
-function numberLengthValidator(length: number): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    const value = control.value;
-    
-    if (isNaN(value) || value.toString().length !== length) {
-      return { 'numberLength': { value: control.value } };
+  numberLengthValidator(length: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      
+      if (isNaN(value) || value.toString().length !== length) {
+        return { 'numberLength': { value: control.value } };
+      }
+  
+      return null; 
     }
-
-    return null; 
-  };
+}
 }
 
