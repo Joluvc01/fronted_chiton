@@ -3,8 +3,10 @@ export interface IProductionOrder {
     customer:       string;
     generationDate: Date;
     deadline:       Date;
+    completedDate:  Date;
     status:         string;
     details:        IDetail[];
+    translateOrder: number;
 }
 
 export interface IDetail {

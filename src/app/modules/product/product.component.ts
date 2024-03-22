@@ -5,6 +5,8 @@ import { ProductService } from 'src/app/shared/services/product.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductdetailComponent } from './productdetail/productdetail.component';
 import Swal from 'sweetalert2';
+import { ICategory } from 'src/app/core/models/category.model';
+import { CategoryService } from 'src/app/shared/services/category.service';
 
 @Component({
   selector: 'app-product',
@@ -15,7 +17,9 @@ export class ProductComponent implements OnInit{
   products: IProduct[] = [];
   p: number = 1;
   filterName = '';
-  filterField = '';
+  filterStatus = '';
+  filterCategory = '';
+  categories : string[] = [];
   faPen = faPen;
   faThumbTack = faThumbTack;
   faTrash = faTrash;
@@ -23,11 +27,13 @@ export class ProductComponent implements OnInit{
 
   constructor(
     private service: ProductService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private catservice: CategoryService,
   ) {}
 
   ngOnInit(): void {
     this.reloadProductList();
+    this.listcategories();
   }
 
   hasRole(roles: string | string[]): boolean {
@@ -38,6 +44,18 @@ export class ProductComponent implements OnInit{
     }
     
     return roles.some(role => role === userRole);
+  }
+
+  listcategories(): void {
+    this.catservice.getAllCategories().subscribe(
+      (categories: ICategory[]) => {
+        this.categories = categories
+        .map(category => category.name);
+      },
+      error => {
+        console.error('Error al obtener las categorías:', error);
+      }
+    );
   }
   
 
@@ -175,7 +193,7 @@ export class ProductComponent implements OnInit{
               let purchases = errorMessage.Purchases.join(", ");
               let references = errorMessage.References.join(", ");
               
-              let errorText = "Se produjo un error al eliminar el producto.";
+              let errorText = "";
               if (purchases) {
                   errorText += "<br>ID Ordenes de Compra asociadas:" + purchases;
               }
@@ -184,7 +202,7 @@ export class ProductComponent implements OnInit{
               }
           
               Swal.fire({
-                  title: "Error",
+                  title: "Se produjo un error al eliminar el producto",
                   html: errorText,
                   icon: "error"
               });

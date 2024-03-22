@@ -171,7 +171,7 @@ export class TranslateorderComponent {
   }
 
   async generatePdf(transalte: ITranslateOrder): Promise<void> {
-    this.prodservice.getOpById(transalte.id).subscribe(async prodOrder =>{
+    this.prodservice.getOpById(transalte.productionOrder).subscribe(async prodOrder =>{
       const documentDefinition = {
         content: [
           { margin: [0,0,0,10], columnGap: 2, columns:  [

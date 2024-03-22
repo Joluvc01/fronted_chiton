@@ -24,10 +24,6 @@ export class TranslateorderService {
     return this._httpClient.post<ITranslateOrder>(`${this.baseUrl}`, translate);
   }
 
-  public updateTranslate(id: number, translate: ITranslateOrder): Observable<ITranslateOrder>{
-    return this._httpClient.put<ITranslateOrder>(`${this.baseUrl}/${id}`, translate);
-  }
-
   public setStatus(id: number): Observable<string>{
     return this._httpClient.post(`${this.baseUrl}/status/${id}`,null, { responseType: 'text' });
   }

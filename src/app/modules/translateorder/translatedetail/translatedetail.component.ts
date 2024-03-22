@@ -5,6 +5,7 @@ import { IProductionOrder } from 'src/app/core/models/productionorder.model';
 import { ITranslateOrder } from 'src/app/core/models/translateorder.model';
 import { ProductionorderService } from 'src/app/shared/services/productionorder.service';
 import { TranslateorderService } from 'src/app/shared/services/translateorder.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-translatedetail',
@@ -42,7 +43,7 @@ export class TranslatedetailComponent {
     this.opservice.getAllOp().subscribe(
       (op: IProductionOrder[]) => {
         this.op = op
-        .filter(op => op.status === 'Completo')
+        .filter(op => op.status === 'Completo' && op.translateOrder === null)
         .map(op => op.id);
         this.filteredOps = this.op;
       },
@@ -86,7 +87,7 @@ export class TranslatedetailComponent {
     if (this.myform.valid) {
       const formData = this.myform.value;
       const id = this.inputdata.id;
-      const action = id > 0 ? this.service.updateTranslate(id, formData) : this.service.newTranslate(formData);
+      const action = this.service.newTranslate(formData);
       
       action.subscribe(
         (res) => {
@@ -94,9 +95,13 @@ export class TranslatedetailComponent {
           this.closepopup();
         },
         (error) => {
-          console.error('Error al guardar la Orden de traslado:', error);
-          console.log(formData);
-          
+          console.error(error);
+              const errorMessage = error.error;
+              Swal.fire({
+                title: "Error",
+                text: errorMessage,
+                icon: "error"
+              });
         }
       );
     } else {

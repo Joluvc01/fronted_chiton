@@ -49,12 +49,14 @@ export class ProductionorderComponent {
   hasRole(roles: string | string[], status?: string): boolean {
     const userRole = localStorage.getItem('role');
     if (typeof roles === 'string') {
-      roles = [roles];
+        roles = [roles];
     }
     const hasRoles = roles.some(role => role === userRole);
-    const isStatusIncomplete = status && status.trim().toLowerCase() === 'incompleto';
-    return hasRoles && (isStatusIncomplete || !status);
+    const isStatusComplete = status && status.trim().toLowerCase() === 'completo';
+    return hasRoles && !isStatusComplete;
   }
+
+
 
   modal(id:number, title:string){
     var _popup = this.dialog.open(ProductiondetailComponent,{
@@ -165,26 +167,39 @@ export class ProductionorderComponent {
   }
   
   async generatePdf(prodOrder: IProductionOrder): Promise<void> {
-    const documentDefinition = {
+    const logoImage = await this.util.getBase64ImageFromURL("../../../assets/media/logo-nobg.png");
+  
+    const documentDefinition: any = {
       content: [
         { margin: [0,0,0,10], columnGap: 2, columns:  [
-          { image: await this.util.getBase64ImageFromURL("../../../assets/media/logo-nobg.png"), width: 60},
+          { image: logoImage, width: 60},
           { text: `Orden de Produccion Nro.${prodOrder.id}`, style: 'header', alignment: 'center' },
         ]},
         { text: `Cliente: ${prodOrder.customer}`, style: 'subheader', margin: [0, 0, 0, 5]},
         { text: `Fecha Generada: ${prodOrder.generationDate}`, style: 'subheader', margin: [0, 0, 0, 5]},
         { text: `Fecha Limite: ${prodOrder.deadline}`, style: 'subheader', margin: [0, 0, 0, 5]},
-        { text: `Estado: ${prodOrder.status}`, style: 'subheader', margin: [0, 0, 0, 5]},
-        this.getDetails(prodOrder.details),
       ],
       styles: {
         header: { fontSize: 30, bold: true },
         subheader: { fontSize: 18},
       }
     };
-
-    pdfMake.createPdf(documentDefinition).open();
+  
+    if (prodOrder.completedDate !== null) {
+      documentDefinition.content.push(
+        { text: `Fecha Completada: ${prodOrder.completedDate}`, style: 'subheader', margin: [0, 0, 0, 5] }
+      );
+    }
+  
+    documentDefinition.content.push(
+      { text: `Estado: ${prodOrder.status}`, style: 'subheader', margin: [0, 0, 0, 5] },
+      this.getDetails(prodOrder.details),
+    );
+  
+    const pdf = pdfMake.createPdf(documentDefinition);
+    pdf.open();
   }
+  
 
   private getDetails(details: IDetail[]): any {
     const detailLines = details.map(detail => [detail.reference, detail.quantity.toString()]);
